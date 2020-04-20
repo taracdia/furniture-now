@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+header, footer {
+    background-color: #34495E;
+    color: #CACFD2;
+} 
+header {
+    background-image: linear-gradient(to right, #34495E , #5D6D7E);
+}
+.navbar {
+    background-color: #212F3C;
+}
+body {
+    font-family: 'Righteous' ;
+}
+.dropdown-menu {
+    background-color: #CACFD2;
+    width: max-content;
+    /* right: 0 !important;
+    left: auto !important; */
+}
+#welcomeMessage {
+    color: #CACFD2;
+    text-align: right;
+}
+#welcomeMessage p {
+    margin-bottom: 0;
+}
+#searchBar {
+    width: 150px;
+}
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.carousel-item {
+    text-align: center;
+    vertical-align: middle;
+    height: 400px;
+}
+.carousel-item img {
+    max-height:100%;
+    max-width:100%;
+
+}
+#cartLink {
+    font-size: 50px;
+    color: orange;
+    padding: 0px;
+    margin: 0px;
+}
+header h1, .navbar-dark .navbar-nav .active>.nav-link {
+    color: orange;
+}
+header .form-control {
+    background-color: #1B2631 ;
+}
+.orangeButton {
+    background-color: orange;
+    color: #1B2631;
+}
+.errorMessage {
+    color: red;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.cartImg {
+    max-height: 150px;
+    max-width: 100%;
+}
+div.col img {
+    max-width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.furniture-card {
+    height: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.furniture-card div.col p {
+    text-align: center;
 }
