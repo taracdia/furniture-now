@@ -1,126 +1,156 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Jumbotron } from 'reactstrap';
+
+import { NavLink } from 'react-router-dom';
+import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown } from 'reactstrap';
 
 // $(".addToCart").click(function () {
 //     $("#cartNum").html(++cartNum);
 // });
 // let isDealModalTriggered = false;
 
-// function triggerDealModal() {
-//     if (!isDealModalTriggered && $("#dropdownMenuLink").attr('aria-expanded') == "false") {
-//         $("#dealsModal").modal("show");
-//         isDealModalTriggered = true;
-//     }
-// }
-// $("html").mouseleave(function () {
-//     triggerDealModal();
-// });
-// setTimeout(triggerDealModal, 10000);
-
 class Header extends Component {
+    constructor(props) {
+        super(props);
+
+        this.toggleNav = this.toggleNav.bind(this);
+        this.state = {
+            isNavOpen: false,
+        }
+    }
+
+    toggleNav() {
+        this.setState({
+            isNavOpen: !this.state.isNavOpen
+        })
+    }
+
+
     render() {
+        // $('[data-toggle="tooltip"]').tooltip();
+        // $('[data-toggle="popover"]').popover();
+
         return (
             <React.Fragment>
                 <header>
-                    <div className="container">
-                        <div className="row row-content justify-content-between">
-                            <div className="col col-lg-auto col-12 align-self-center">
-                                <div className="row row-content align-items-center order-lg-2 order-first">
-                                    <div className="col col-auto">
-                                        <img src="img/logo.svg" alt="" height="100px" />
-                                    </div>
-                                    <div className="col col-auto">
+                    <Container>
+                        <Row className="justify-content-between">
+                            <Col sm={"auto"} className="col">
+                                {/* todo: make it so when you mouse over the link it has underlined in orange not blue */}
+                            <NavLink to="/home">
+                                <Row className="align-items-center">
+                                    <Col>
+                                        <img src="img/logo.svg" alt="logo" height="100px" />
+                                    </Col>
+                                    <Col>
                                         <h1>FurnitureNow!</h1>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-auto align-self-end order-last">
-                                <a id="cartLink" role="button" className="btn btn-link" href="checkout.html" data-toggle="tooltip"
-                                    data-placement="top" title="Checkout"><i className="fa fa-shopping-cart"></i><span className="pl-1"
-                                        id="cartNum">0</span></a>
-                            </div>
-                        </div>
-                    </div>
+                                    </Col>
+                                </Row>
+                                </NavLink>
+
+                            </Col>
+                            <Col  xs={"auto"} className="align-self-end">
+                                {/* todo: tooltip */}
+                                <NavLink id="cartLink" className="btn btn-link" role="button" data-toggle="tooltip" data-placement="top" title="Checkout" to="/checkout">
+                                    <i className="fa fa-shopping-cart"></i><span className="pl-1"
+                                        id="cartNum">0</span>
+                                </NavLink>
+                            </Col>
+                        </Row>
+                    </Container>
                 </header>
-                <Navbar dark sticky="top">
-                <div className="container">
-                        <NavbarBrand href="/">NuCamp</NavbarBrand>
-                    </div>
+                {/* todo: fix link, and have it so when go to a page it goes to the top */}
+                <Navbar dark sticky="top" expand="md">
+                    <NavbarToggler onClick={this.toggleNav} />
+                    <Collapse isOpen={this.state.isNavOpen} navbar>
+                        <Nav navbar>
+                            <NavItem>
+                                <NavLink className="nav-link" to="/home">Home</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" to="/#tablesChairs">Tables and Chairs</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" to="/#couches">Couches</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" to="/#beds">Beds</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" to="/checkout">Check out</NavLink>
+                            </NavItem>
+                        </Nav>
+                        <Login />
+                    </Collapse>
                 </Navbar>
-                <nav className="navbar navbar-expand-md navbar-dark sticky-top">
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav mr-5 mt-2 mt-0">
-                            <li className="nav-item active">
-                                <a className="nav-link" href="#dealsCarousel">Home <span className="sr-only">(current)</span></a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#tablesChairs">Tables and Chairs</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#couches">Couches</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#beds">Beds</a>
-                            </li>
-                        </ul>
-                        <div className="row row-content align-items-center">
-                            <div className="col-auto d-none" id="welcomeMessage">
-                                <p>Welcome, adsfasdf@sdfasdf.com</p>
-                            </div>
-                            <div className="col-auto">
-                                <div className="dropdown show" id="loginContainer">
-                                    <a className="btn dropdown-toggle orangeButton" href="#" role="button" id="dropdownMenuLink"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Log in!
-                        </a>
-                                    <form className="dropdown-menu px-4 py-3">
-                                        <div className="form-group">
-                                            <label htmlFor="loginEmail">Email address</label>
-                                            <input type="email" className="form-control" id="loginEmail"
-                                                placeholder="email@example.com" />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="loginPass">Password</label>
-                                            <input type="password" className="form-control" id="loginPass" placeholder="Password" />
-                                        </div>
-                                        <div className="form-check">
-                                            <input type="checkbox" className="form-check-input" id="rememberMeCheck" />
-                                            <label className="form-check-label" htmlFor="rememberMeCheck">
-                                                Remember me
-                                </label>
-                                        </div>
-                                        <p className="d-none errorMessage" id="loginErrorMessage">Username or password incorrect!</p>
-                                        <button type="button" className="btn orangeButton" id="signInButton">Sign in</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+                
             </React.Fragment>
         );
     }
 }
-//modal
-/* <div className="modal fade" id="dealsModal" tabindex="-1" role="dialog">
-    <div className="modal-dialog" role="document">
-        <div className="modal-content">
-            <div className="modal-header">
-                <h1 className="modal-title">Special Offer!</h1>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div className="modal-body">
-                <img src="img/celebrate.jpg" className="w-100" />
-                <p>30% off when you use coupon code <span className="font-weight-bold">DEAL</span>.</p>
-            </div>
-        </div>
-    </div>
-</div> */
+
+class Login extends Component {
+    constructor(props) {
+        super(props);
+
+        this.toggleOpen = this.toggleOpen.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
+
+        this.state = {
+            isOpen: false,
+            isLoggedIn: false
+        }
+    }
+    handleLogin() {
+        this.setState({
+            isLoggedIn: true
+        })
+    }
+
+    toggleOpen() {
+        this.setState({
+            isOpen: !this.state.isOpen
+        })
+    }
+
+    render() {
+        if (this.state.isLoggedIn) {
+            return (
+                <p className="mb-0" id="welcomeMessage">Welcome, {this.email.value}</p>
+            );
+        } else {
+            return (
+                <Dropdown isOpen={this.state.isOpen} toggle={this.toggleOpen}>
+                    <DropdownToggle className="orangeButton" caret>
+                        Log in!
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <Form onSubmit={this.handleLogin}>
+                            <FormGroup>
+                                <Label htmlFor="email">Email address</Label>
+                                <Input type="email" id="email"
+                                    placeholder="email@example.com"
+                                    innerRef={input => this.email = input}
+                                    />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="loginPass">Password</Label>
+                                <Input type="password" id="loginPass"
+                                    placeholder="Password" />
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" name="remember"
+                                    />
+                                    Remember me
+                                </Label>
+                            </FormGroup>
+                            <Button type="submit" value="submit" color="primary">Login</Button>
+                        </Form>
+                    </DropdownMenu>
+                </Dropdown>
+            );
+        }
+    }
+}
 
 export default Header;

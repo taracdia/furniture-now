@@ -19,7 +19,6 @@ body {
 }
 #welcomeMessage {
     color: #CACFD2;
-    text-align: right;
 }
 #welcomeMessage p {
     margin-bottom: 0;
@@ -46,12 +45,13 @@ body {
     padding: 0px;
     margin: 0px;
 }
-header h1, .navbar-dark .navbar-nav .active>.nav-link {
+header h1, .navbar-dark .navbar-nav .active>.nav-link, .attention {
     color: orange;
 }
-header .form-control {
+header .form-contro {
     background-color: #1B2631 ;
 }
+/* todo: make it so after clicked button the color is good */
 .orangeButton {
     background-color: orange;
     color: #1B2631;
@@ -74,4 +74,12 @@ div.col img {
 
 .furniture-card div.col p {
     text-align: center;
+}
+
+/* border */
+
+.border {
+    border-color: red;
+    border-style: solid;
+
 }
