@@ -1,59 +1,69 @@
-import React, { Component } from 'react';
-import ShoppingPage from './ShoppingPage.js'
-import CheckoutPage from './CheckoutPage.js'
-import Footer from './Footer.js';
-import Header from './Header.js';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import React, { Component } from "react";
+import ShoppingPage from "./ShoppingPage"
+import CheckoutPage from "./CheckoutPage"
+import Footer from "./Footer";
+import Header from "./Header";
+import DealModal from "./DealModal";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { addSingleFurniture, removeSingleFurniture, setMultipleFurnitures, deleteFurnitures } from "../redux/ActionCreators";
 
 //todo: redux, sass
 
+const mapStateToProps = state => {
+    return {
+        furnitureItems: state.furnitureItems,
+        isCouponApplied: state.isCouponApplied,
+        isLoggedIn: state.isLoggedIn,
+        isThankDisplayed: state.isThankDisplayed,
+        totalPrice: state.totalPrice,
+        shippingPrice: state.shippingPrice,
+        oldPrice: state.oldPrice,
+
+    };
+};
+
+const mapDispatchToProps = {
+    addSingleFurniture: (furniture) => (addSingleFurniture(furniture)),
+    removeSingleFurniture: (furniture) => (removeSingleFurniture(furniture)),
+    setMultipleFurnitures: (furniture, quantity) => (setMultipleFurnitures(furniture, quantity)),
+    deleteFurnitures: (furniture) => (deleteFurnitures(furniture))
+};
+
 class Main extends Component {
-    constructor(props) {
-        super(props);
 
-        this.handleModalOn = this.handleModalOn.bind(this);
-        this.handleModalOff = this.handleModalOff.bind(this);
-
-        this.state = {
-            //todo: make it false
-            isDealModalTriggered: true,
-            isModalOpen: false
-        }
-    }
-
-    handleModalOn() {
-        if (!this.state.isDealModalTriggered && !this.state.isModalOpen) {
-            this.setState({
-                isModalOpen: true
-            });
-            this.setState({isDealModalTriggered: true});
-        }
-    }
-    handleModalOff(){
-            this.setState({isModalOpen: false});
-            this.setState({isDealModalTriggered: true});
-    }
 
     render() {
-        setTimeout(this.handleModalOn, 10000);
+        // setTimeout(this.handleModalOn, 10000);
 
         return (
-            <div  onMouseLeave={this.handleModalOn}>
-                <Modal isOpen={this.state.isModalOpen} toggle={this.handleModalOn}>
-                    <ModalHeader toggle={this.handleModalOff}>
-                        Special Offer!
-                    </ModalHeader>
-                    <ModalBody>
-                    <img src="img/celebrate.jpg" className="w-100" />
-                <h5>30% off when you use coupon code <span className="font-weight-bolder attention">DEAL</span>.</h5>
-                    </ModalBody>
-                </Modal>
-                <Header />
+            // <div onMouseLeave={this.handleModalOn}>
+            <div>
+                <DealModal />
+                <Header 
+                    furnitureItems={this.props.furnitureItems}
+                />
                 <Switch>
-                    <Route path='/home' render={() => <ShoppingPage />} />
-                    <Route path='/checkout' render={() => <CheckoutPage />} />
-                    <Redirect to='/home' />
+                    <Route path="/home" render={() => <ShoppingPage
+                        furnitureItems={this.props.furnitureItems}
+                        addSingleFurniture={this.props.addSingleFurniture}
+                        removeSingleFurniture={this.props.removeSingleFurniture}
+                        setMultipleFurnitures={this.props.setMultipleFurnitures}
+                        deleteFurnitures={this.props.deleteFurnitures}
+                    />} />
+                    <Route path="/checkout" render={() => <CheckoutPage
+                        furnitureItems={this.props.furnitureItems}
+                        isCouponApplied={this.props.isCouponApplied}
+                        isLoggedIn={this.props.isLoggedIn}
+                        isThankDisplayed={this.props.isThankDisplayed}
+                        totalPrice={this.props.totalPrice}
+                        oldPrice={this.props.oldPrice}
+                        addSingleFurniture={this.props.addSingleFurniture}
+                        removeSingleFurniture={this.props.removeSingleFurniture}
+                        setMultipleFurnitures={this.props.setMultipleFurnitures}
+                        deleteFurnitures={this.props.deleteFurnitures}
+                    />} />
+                    <Redirect to="/home" />
                 </Switch>
                 <Footer />
             </div>
@@ -61,4 +71,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

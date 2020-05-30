@@ -1,5 +1,13 @@
-import React, { Component } from 'react';
-import { Button, Form, FormGroup, Input, Col } from 'reactstrap';
+import React, { Component } from "react";
+import { Button, Row, Col } from "reactstrap";
+import { Control, LocalForm, Errors } from 'react-redux-form';
+
+const required = val => val && val.length;
+const maxLength = len => val => !val || (val.length <= len);
+const minLength = len => val => val && (val.length >= len);
+const exactLength = len => val => val && (val.length === len);
+const isNumber = val => !isNaN(+val);
+const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 class CheckoutForm extends Component {
     constructor(props) {
@@ -17,23 +25,12 @@ class CheckoutForm extends Component {
             securityCode: "",
             cardNumber: "",
             cardType: "Visa",
-            shippingPrice: 0.0,
-            hasCoupon: false
+            shipType: "Free Shipping +$0.00"
         }
 
-        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
-        });
-    }
 
     handleShippingChange(event) {
         //todo: make it work
@@ -49,124 +46,296 @@ class CheckoutForm extends Component {
     }
 
     handleSubmit(event) {
-        console.log('Current state is: ' + JSON.stringify(this.state));
-        alert('Current state is: ' + JSON.stringify(this.state));
+        console.log("Current state is: " + JSON.stringify(this.state));
+        alert("Current state is: " + JSON.stringify(this.state));
         event.preventDefault();
     }
 
     render() {
         return (
-            <Form onSubmit={this.handleSubmit}>
+            <LocalForm onSubmit={this.handleSubmit}>
                 <div className="pb-5">
-                    <FormGroup row>
-                        <Col-12 sm="6">
-                            <Input type="text" id="firstName" name="firstName"
+                    <Row className="form-group">
+                        <Col xs="12" sm="6">
+                            <Control.text
+                                model=".firstName"
+                                id="firstName"
+                                name="firstName"
                                 placeholder="First Name"
-                                value={this.state.firstName}
-                                onChange={this.handleInputChange} />
-                        </Col-12>
-                        <Col-12 sm="6">
-                            <Input type="text" id="lastName" name="lastName"
+                                className="form-control"
+                                validators={{
+                                    required
+                                }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".firstName"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required'
+                                }}
+                            />
+                        </Col>
+                        <Col xs="12" sm="6">
+                            <Control.text
+                                model=".lastName"
+                                id="lastName"
+                                name="lastName"
                                 placeholder="Last Name"
-                                value={this.state.lastName}
-                                onChange={this.handleInputChange} />
-                        </Col-12>
-                    </FormGroup>
-                    <FormGroup row>
+                                className="form-control"
+                                validators={{
+                                    required
+                                }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".lastName"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required'
+                                }}
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="form-group">
                         <Col>
-                            <Input type="email" id="email" name="email"
+                            <Control.text
+                                model=".email"
+                                id="email"
+                                name="email"
                                 placeholder="Email"
-                                value={this.state.email}
-                                onChange={this.handleInputChange} />
+                                className="form-control"
+                                validators={{
+                                    required,
+                                    validEmail
+                                }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".email"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required',
+                                    validEmail: "Invalid Email"
+                                }}
+                            />
                         </Col>
-                    </FormGroup>
-                    <FormGroup row>
+                    </Row>
+                    <Row className="form-group">
                         <Col>
-                            <Input type="text" id="address1" name="address1"
+                            <Control.text
+                                model=".address1"
+                                id="address1"
+                                name="address1"
                                 placeholder="Address"
-                                value={this.state.address1}
-                                onChange={this.handleInputChange} />
+                                className="form-control"
+                                validators={{
+                                    required
+                                }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".address1"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required'
+                                }}
+                            />
                         </Col>
-                    </FormGroup>
-                    <FormGroup row>
+                    </Row>
+                    <Row className="form-group">
                         <Col>
-                            <Input type="text" id="address2" name="address2"
+                            <Control.text
+                                model=".address2"
+                                id="address2"
+                                name="address2"
                                 placeholder="Apartment, studio, or floor (optional)"
-                                value={this.state.address2}
-                                onChange={this.handleInputChange} />
+                                className="form-control"
+                            />
                         </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Col-12 md="4">
-                            <Input type="text" id="city" name="city"
+                    </Row>
+                    <Row className="form-group">
+                        <Col xs="12" md="4">
+                            <Control.text
+                                model=".city"
+                                id="city"
+                                name="city"
                                 placeholder="City"
-                                value={this.state.city}
-                                onChange={this.handleInputChange} />
-                        </Col-12>
-                        <Col-12 sm="6" md="4">
-                            <Input type="text" id="state" name="state"
+                                className="form-control"
+                                validators={{
+                                    required
+                                }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".city"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required'
+                                }}
+                            />
+                        </Col>
+                        <Col xs="12" sm="6" md="4">
+                            <Control.text
+                                model=".state"
+                                id="state"
+                                name="state"
                                 placeholder="State"
-                                value={this.state.state}
-                                onChange={this.handleInputChange} />
-                        </Col-12>
-                        <Col-12 sm="6" md="4">
-                            <Input type="text" id="zipcode" name="zipcode"
+                                className="form-control"
+                                validators={{
+                                    required
+                                }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".state"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required'
+                                }}
+                            />
+                        </Col>
+                        <Col xs="12" sm="6" md="4">
+                            <Control.text
+                                model=".zipcode"
+                                id="zipcode"
+                                name="zipcode"
                                 placeholder="Zipcode"
-                                value={this.state.zipcode}
-                                onChange={this.handleInputChange} />
-                        </Col-12>
-                    </FormGroup>
+                                className="form-control"
+                                validators={{
+                                    required,
+                                    isNumber,
+                                    exactLength: exactLength(5)
+                                }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".zipcode"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required',
+                                    isNumber: "Numbers only",
+                                    exactLength: "Must be exactly 5 numbers"
+                                }}
+                            />
+                        </Col>
+                    </Row>
                 </div>
-                <FormGroup row>
-                    <Col-12 lg="9">
-                        <Input type="text" id="cardName" name="cardName"
+                <Row className="form-group">
+                    <Col xs="12" lg="9">
+                        <Control.text
+                            model=".cardName"
+                            id="cardName"
+                            name="cardName"
                             placeholder="Name on Card"
-                            value={this.state.cardName}
-                            onChange={this.handleInputChange} />
-                    </Col-12>
-                    <Col-6 lg="3" className="order-lg-2 order-2">
-                        <Input type="text" id="securityCode" name="securityCode"
+                            className="form-control"
+                            validators={{
+                                required
+                            }}
+                        />
+                        <Errors
+                                className="text-danger"
+                                model=".cardName"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required'
+                                }}
+                            />
+                    </Col>
+                    <Col xs="6" lg="3" className="order-lg-2 order-2">
+                        <Control.text
+                            model=".securityCode"
+                            id="securityCode"
+                            name="securityCode"
                             placeholder="Security Code"
-                            value={this.state.securityCode}
-                            onChange={this.handleInputChange} />
-                    </Col-6>
+                            className="form-control"
+                            validators={{
+                                required,
+                                isNumber,
+                                exactLength: exactLength(3)
+                            }}
+                        />
+                        <Errors
+                                className="text-danger"
+                                model=".securityCode"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required',
+                                    isNumber: "Numbers only",
+                                    exactLength: "Must be exactly 3 numbers"
+                                }}
+                            />
+                    </Col>
 
-                    <Col-12 className="order-lg-3 order-4">
-                        <Input type="text" id="cardNumber" name="cardNumber"
+                    <Col xs="12" className="order-lg-3 order-4">
+                        <Control.text
+                            model=".cardNumber"
+                            id="cardNumber"
+                            name="cardNumber"
                             placeholder="Card Number"
-                            value={this.state.cardNumber}
-                            onChange={this.handleInputChange} />
-                    </Col-12>
-                    <Col-6 className="order-lg-4 order-3">
-                        <Input type="select" name="cardType"
-                            value={this.state.cardType}
-                            onChange={this.handleInputChange}
-                            >
-                            <option>Visa</option>
+                            className="form-control"
+                            validators={{
+                                required,
+                                isNumber,
+                                minLength: minLength(13),
+                                maxLength: maxLength(19)
+                            }}
+                        />
+                        <Errors
+                                className="text-danger"
+                                model=".cardNumber"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required',
+                                    isNumber: "Numbers only",
+                                    minLength: "Must be at least 13 numbers",
+                                    maxLength: "Must be 19 numbers or less"
+                                }}
+                            />
+                    </Col>
+                    <Col xs="6" className="order-lg-4 order-3">
+                        <Control.select
+                            model=".cardType"
+                            id="cardType"
+                            name="cardType"
+                            className="form-control"
+                        >
+                            <option defaultValue>Visa</option>
                             <option>American Express</option>
-                        </Input>
-                    </Col-6>
-                    <Col-12 lg="6">
-                        <Input
-                            type="select"
-                            value={this.state.shippingPrice}
-                            onChange={this.handleShippingChange}
+                        </Control.select>
+                    </Col>
+                    <Col xs="12" lg="6">
+                        <Control.select
+                            model=".shipType"
+                            id="shipType"
+                            name="shipType"
+                            className="form-control"
                         >
                             <option defaultValue>Free Shipping +$0.00</option>
                             <option>Fast Shipping +$2.00</option>
                             <option>Faster Shipping +$5.00</option>
-                        </Input>
-                    </Col-12>
-                </FormGroup>
-                <FormGroup row>
+                        </Control.select>
+                    </Col>
+                </Row>
+                <Row className="form-group">
                     <Col xs={"auto"}>
                         <Button type="submit" color="primary">Confirm Purchase</Button>
                     </Col>
                     <Col>
                         <Button color="warning" href="index.html" role="button">Cancel</Button>
                     </Col>
-                </FormGroup>
-            </Form>
+                </Row>
+            </LocalForm>
         );
     }
 }

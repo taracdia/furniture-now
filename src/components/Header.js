@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { NavLink } from 'react-router-dom';
-import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown } from 'reactstrap';
+import { NavLink } from "react-router-dom";
+import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown } from "reactstrap";
 
 // $(".addToCart").click(function () {
 //     $("#cartNum").html(++cartNum);
@@ -26,8 +26,8 @@ class Header extends Component {
 
 
     render() {
-        // $('[data-toggle="tooltip"]').tooltip();
-        // $('[data-toggle="popover"]').popover();
+        // $("[data-toggle="tooltip"]").tooltip();
+        // $("[data-toggle="popover"]").popover();
 
         return (
             <React.Fragment>
@@ -52,7 +52,7 @@ class Header extends Component {
                                 {/* todo: tooltip */}
                                 <NavLink id="cartLink" className="btn btn-link" role="button" data-toggle="tooltip" data-placement="top" title="Checkout" to="/checkout">
                                     <i className="fa fa-shopping-cart"></i><span className="pl-1"
-                                        id="cartNum">0</span>
+                                        id="cartNum">{this.props.furnitureItems.reduce((accumulator, item) => accumulator + item.quantity, 0)}</span>
                                 </NavLink>
                             </Col>
                         </Row>

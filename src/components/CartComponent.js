@@ -1,52 +1,54 @@
-import React, { Component } from 'react';
-import furnitureItems from '../shared/furnitureItems.js';
-import { Container, Row, Button, Form, FormGroup, Label, Input, Col } from 'reactstrap';
+import React, { Component } from "react";
+import { Container, Row, Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
+import Quantity from "./QuantityComponent";
 
-class CartComponent extends Component {
+class Cart extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-            hasCoupon: true,
-            totalPrice: 2.0,
-            shippingCost: 0.0
+            isErrorMessageDisplayed: false
         }
     }
 
-    handleSubmit(event) {
-        //handle coupon
+    handleCouponSubmit(event) {
+
         event.preventDefault();
     }
 
     render() {
-        const furnitures = furnitureItems.filter(furniture => furniture.quantity > 0).map(furniture => {
+        const props = this.props
+        const furnitures = props.furnitureItems.filter(furniture => furniture.quantity > 0).map(furniture => {
             return (
-                <CartItem furniture={furniture} />
+                <CartItem
+                    furniture={furniture}
+                    setMultipleFurnitures={props.setMultipleFurnitures}
+                />
             );
         });
 
-        const discountMessage = this.state.hasCoupon ? (
+        const discountMessage = props.isCouponApplied ? (
             <Row>
                 <Col>
                     <p id="discountAppliedMessage">30% Discount Applied!</p>
                 </Col>
             </Row>
         ) : "";
-            // <Row>
-            //     <Col>
-            //     <p className="d-none errorMessage">Invalid coupon</p>
-            //     </Col>
-            // </Row>
+        // <Row>
+        //     <Col>
+        //     <p className="d-none errorMessage">Invalid coupon</p>
+        //     </Col>
+        // </Row>
 
-        const priceMessage = this.state.hasCoupon ? (
+        const priceMessage = props.isCouponApplied ? (
             <Row>
                 <Col>
-                    <p>Your total is: $<del id="oldPrice">{this.state.totalPrice}</del> <span id="totalPriceCart">{this.state.totalPrice * .3}</span></p>
+                    <p>Your total is: $<del id="oldPrice">{props.totalPrice}</del> <span id="totalPriceCart">{props.totalPrice * .3}</span></p>
                 </Col>
             </Row>
         ) : (
                 <Row>
                     <Col>
-                        <p>Your total is: ${this.state.totalPrice}</p>
+                        <p>Your total is: ${props.totalPrice}</p>
                     </Col>
                 </Row>
             );
@@ -63,7 +65,9 @@ class CartComponent extends Component {
                             <p id="cartShippingCost">$0</p>
                         </Col>
                     </Row>
-                    <Form onSubmit={this.handleSubmit}>
+                    {/* <Form onSubmit={this.handleSubmit}> */}
+                    <Form>
+
                         <FormGroup row>
                             <Col xs={"auto"}>
                                 <Input type="text" className="form-control" id="inputCoupon" placeholder="Coupon Code (Optional)" />
@@ -92,25 +96,79 @@ class CartComponent extends Component {
     }
 }
 
-function CartItem({ furniture }) {
-    return (
-        <Row className="align-items-center pb-5">
-            <Col xs={"auto"}>
-                <Button className="orangeButton" type="button" data-index={furniture.id}>&times;</Button>
-            </Col>
-            <Col-4 xl="7">
-                <img className="cartImg" src={furniture.image} />
-            </Col-4>
-            <Col>
-                <p>{furniture.name}: ${furniture.price}</p>
-            </Col>
-            <Col>
-                {/* todo: fix being able to put in the number */}
-                <Label htmlFor="quantity">Quantity</Label>
-                <Input type="number" id="quantity" name="quantity" value={furniture.quantity} min="1"></Input>
-            </Col>
-        </Row>
-    );
+class CartItem extends Component {
+    constructor(props) {
+        super(props);
+
+        this.delete = this.delete.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.increase = this.increase.bind(this);
+        this.decrease = this.decrease.bind(this);
+
+        this.state = {
+            quantity: this.props.furniture.quantity
+        }
+    }
+    delete() {
+        this.props.setMultipleFurnitures(this.props.furniture, +0);
+    }
+
+    increase() {
+        const value = +this.state.quantity + 1;
+
+        this.setState({
+            quantity: value
+        });
+        this.props.setMultipleFurnitures(this.props.furniture, value);
+    }
+
+    decrease() {
+        const value = +this.state.quantity - 1;
+        if (value > 0) {
+            this.setState({
+                quantity: value
+            });
+            this.props.setMultipleFurnitures(this.props.furniture, value);
+        }
+    }
+
+    handleInputChange(e) {
+        const value = +e.target.value;
+
+        this.setState({
+            quantity: value
+        });
+        this.props.setMultipleFurnitures(this.props.furniture, value);
+    }
+
+    render() {
+        const furniture = this.props.furniture;
+        return (
+            <Row className="align-items-center pb-5">
+                <Col xs={"auto"}>
+                    <Button
+                        onClick={this.delete}
+                        className="orangeButton"
+                        type="button"
+                    >
+                        &times;
+                    </Button>
+                </Col>
+                <Col-4 xl="7">
+                    <img
+                        className="cartImg"
+                        src={furniture.image} />
+                </Col-4>
+                <Col>
+                    <p>{furniture.name}: ${furniture.price}</p>
+                </Col>
+                <Quantity
+                    furniture={furniture}
+                    setMultipleFurnitures={this.props.setMultipleFurnitures}
+                />
+            </Row>
+        );
+    }
 }
 
-export default CartComponent;
+export default Cart;

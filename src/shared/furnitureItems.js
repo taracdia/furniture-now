@@ -1,4 +1,4 @@
-import * as furnitureTypes from './furnitureTypes';
+import * as furnitureTypes from "./furnitureTypes";
 
 export const FURNITURE_ITEMS = [
     {
