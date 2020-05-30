@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Container, Row, Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
+import { Container, Row, Button, Form, FormGroup, Input, Col } from "reactstrap";
 import Quantity from "./QuantityComponent";
+import {Loading} from "./LoadingComponent"
 
 class Cart extends Component {
     constructor(props) {
@@ -46,18 +47,35 @@ class Cart extends Component {
         const priceMessage = props.isCouponApplied ? (
             <Row>
                 <Col>
-                    <p>Your total is: $<del>{props}</del> <span>{props * .3}</span></p>
+                    {/* <p>Your total is: $<del>{props}</del> <span>{props * .3}</span></p> */}
                 </Col>
             </Row>
         ) : (
                 <Row>
                     <Col>
-                        <p>Your total is: ${props}</p>
+                        {/* <p>Your total is: ${props}</p> */}
                     </Col>
                 </Row>
             );
-
-        if (furnitures.length > 0) {
+        if (this.props.isLoading){
+            return (
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            )
+        } else if (this.props.errMess){
+            return (
+                <div className="container">
+                    <div className="row"> 
+                        <div className="col">
+                            <h4>{props.campsites.errMess}</h4>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else if (furnitures.length > 0) {
             return (
                 <Container>
                     <Row className="pb-4">

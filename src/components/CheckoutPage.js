@@ -38,6 +38,8 @@ function CheckoutPage(props) {
                         <Cart
                             furnitureItems={props.furnitureItems}
                             setFurnitureQuantity={props.setFurnitureQuantity}
+                            isLoading={props.isLoading}
+                            errMess={props.errMess}
                         />
                     </Col>
                     <Col xl={7} pt-xl={1} pt={5}>

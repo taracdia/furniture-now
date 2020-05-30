@@ -54,12 +54,12 @@ function FurnitureRow(props) {
                 </div>
                 </div>
                 );
-        } else if (props.errMessage) {
+        } else if (props.errMess) {
                             return (
                     <div className="container">
                         <div className="row">
                             <div className="col">
-                                <h4>{this.props.errMess}</h4>
+                                <h4>{props.errMess}</h4>
                             </div>
                         </div>
                     </div>
