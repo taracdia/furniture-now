@@ -6,7 +6,7 @@ import Header from "./Header";
 import DealModal from "./DealModal";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { addSingleFurniture, removeSingleFurniture, setMultipleFurnitures, deleteFurnitures } from "../redux/ActionCreators";
+import { setFurnitureQuantity, fetchFurnitures } from "../redux/ActionCreators";
 
 //todo: redux, sass
 
@@ -15,23 +15,18 @@ const mapStateToProps = state => {
         furnitureItems: state.furnitureItems,
         isCouponApplied: state.isCouponApplied,
         isLoggedIn: state.isLoggedIn,
-        isThankDisplayed: state.isThankDisplayed,
-        totalPrice: state.totalPrice,
-        shippingPrice: state.shippingPrice,
-        oldPrice: state.oldPrice,
-
     };
 };
 
 const mapDispatchToProps = {
-    addSingleFurniture: (furniture) => (addSingleFurniture(furniture)),
-    removeSingleFurniture: (furniture) => (removeSingleFurniture(furniture)),
-    setMultipleFurnitures: (furniture, quantity) => (setMultipleFurnitures(furniture, quantity)),
-    deleteFurnitures: (furniture) => (deleteFurnitures(furniture))
+    setFurnitureQuantity: (furniture, quantity) => (setFurnitureQuantity(furniture, quantity)),
+    fetchFurnitures: () => (fetchFurnitures())
 };
 
 class Main extends Component {
-
+    componentDidMount() {
+        this.props.fetchFurnitures();
+    }
 
     render() {
         // setTimeout(this.handleModalOn, 10000);
@@ -44,24 +39,21 @@ class Main extends Component {
                     furnitureItems={this.props.furnitureItems}
                 />
                 <Switch>
-                    <Route path="/home" render={() => <ShoppingPage
-                        furnitureItems={this.props.furnitureItems}
-                        addSingleFurniture={this.props.addSingleFurniture}
-                        removeSingleFurniture={this.props.removeSingleFurniture}
-                        setMultipleFurnitures={this.props.setMultipleFurnitures}
-                        deleteFurnitures={this.props.deleteFurnitures}
-                    />} />
+                    <Route path="/home" render={() => 
+                        <ShoppingPage
+                            furnitureItems={this.props.furnitureItems.furnitureItems}
+                            setFurnitureQuantity={this.props.setFurnitureQuantity}
+                            isLoading={this.props.furnitureItems.isLoading}
+                            errMess={this.props.furnitureItems.errMess}
+                        />} 
+                    />
                     <Route path="/checkout" render={() => <CheckoutPage
-                        furnitureItems={this.props.furnitureItems}
+                        furnitureItems={this.props.furnitureItems.furnitureItems}
                         isCouponApplied={this.props.isCouponApplied}
                         isLoggedIn={this.props.isLoggedIn}
-                        isThankDisplayed={this.props.isThankDisplayed}
-                        totalPrice={this.props.totalPrice}
-                        oldPrice={this.props.oldPrice}
-                        addSingleFurniture={this.props.addSingleFurniture}
-                        removeSingleFurniture={this.props.removeSingleFurniture}
-                        setMultipleFurnitures={this.props.setMultipleFurnitures}
-                        deleteFurnitures={this.props.deleteFurnitures}
+                        setFurnitureQuantity={this.props.setFurnitureQuantity}
+                        isLoading={this.props.furnitureItems.isLoading}
+                        errMess={this.props.furnitureItems.errMess}
                     />} />
                     <Redirect to="/home" />
                 </Switch>

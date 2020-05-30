@@ -6,7 +6,7 @@ class Cart extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isErrorMessageDisplayed: false
+            isErrorMessageDisplayed: true
         }
     }
 
@@ -15,13 +15,15 @@ class Cart extends Component {
         event.preventDefault();
     }
 
+    //todo: mistake: when get rid of a furiture the next furniture down has its furniture count changed to that of next furniture down
+
     render() {
         const props = this.props
         const furnitures = props.furnitureItems.filter(furniture => furniture.quantity > 0).map(furniture => {
             return (
                 <CartItem
                     furniture={furniture}
-                    setMultipleFurnitures={props.setMultipleFurnitures}
+                    setFurnitureQuantity={props.setFurnitureQuantity}
                 />
             );
         });
@@ -33,22 +35,24 @@ class Cart extends Component {
                 </Col>
             </Row>
         ) : "";
-        // <Row>
-        //     <Col>
-        //     <p className="d-none errorMessage">Invalid coupon</p>
-        //     </Col>
-        // </Row>
+
+        const errorMessage =  this.state.isErrorMessageDisplayed ? 
+        (<Row>
+            <Col>
+            <p className="errorMessage">Invalid coupon</p>
+            </Col>
+        </Row>) : "";
 
         const priceMessage = props.isCouponApplied ? (
             <Row>
                 <Col>
-                    <p>Your total is: $<del id="oldPrice">{props.totalPrice}</del> <span id="totalPriceCart">{props.totalPrice * .3}</span></p>
+                    <p>Your total is: $<del>{props}</del> <span>{props * .3}</span></p>
                 </Col>
             </Row>
         ) : (
                 <Row>
                     <Col>
-                        <p>Your total is: ${props.totalPrice}</p>
+                        <p>Your total is: ${props}</p>
                     </Col>
                 </Row>
             );
@@ -62,7 +66,7 @@ class Cart extends Component {
                     {furnitures}
                     <Row>
                         <Col>
-                            <p id="cartShippingCost">$0</p>
+                            <p>Shipping: $0</p>
                         </Col>
                     </Row>
                     {/* <Form onSubmit={this.handleSubmit}> */}
@@ -78,6 +82,7 @@ class Cart extends Component {
                         </FormGroup>
                     </Form>
                     {discountMessage}
+                    {errorMessage}
                     <hr />
                     {priceMessage}
                 </Container>
@@ -110,7 +115,7 @@ class CartItem extends Component {
         }
     }
     delete() {
-        this.props.setMultipleFurnitures(this.props.furniture, +0);
+        this.props.setFurnitureQuantity(this.props.furniture, +0);
     }
 
     increase() {
@@ -119,7 +124,7 @@ class CartItem extends Component {
         this.setState({
             quantity: value
         });
-        this.props.setMultipleFurnitures(this.props.furniture, value);
+        this.props.setFurnitureQuantity(this.props.furniture, value);
     }
 
     decrease() {
@@ -128,7 +133,7 @@ class CartItem extends Component {
             this.setState({
                 quantity: value
             });
-            this.props.setMultipleFurnitures(this.props.furniture, value);
+            this.props.setFurnitureQuantity(this.props.furniture, value);
         }
     }
 
@@ -138,7 +143,7 @@ class CartItem extends Component {
         this.setState({
             quantity: value
         });
-        this.props.setMultipleFurnitures(this.props.furniture, value);
+        this.props.setFurnitureQuantity(this.props.furniture, value);
     }
 
     render() {
@@ -162,10 +167,12 @@ class CartItem extends Component {
                 <Col>
                     <p>{furniture.name}: ${furniture.price}</p>
                 </Col>
-                <Quantity
-                    furniture={furniture}
-                    setMultipleFurnitures={this.props.setMultipleFurnitures}
-                />
+                <Col>
+                    <Quantity
+                        furniture={furniture}
+                        setFurnitureQuantity={this.props.setFurnitureQuantity}
+                    />
+                </Col>
             </Row>
         );
     }

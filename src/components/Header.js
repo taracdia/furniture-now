@@ -52,7 +52,7 @@ class Header extends Component {
                                 {/* todo: tooltip */}
                                 <NavLink id="cartLink" className="btn btn-link" role="button" data-toggle="tooltip" data-placement="top" title="Checkout" to="/checkout">
                                     <i className="fa fa-shopping-cart"></i><span className="pl-1"
-                                        id="cartNum">{this.props.furnitureItems.reduce((accumulator, item) => accumulator + item.quantity, 0)}</span>
+                                        id="cartNum">{this.props.furnitureItems.furnitureItems.reduce((accumulator, item) => accumulator + item.quantity, 0)}</span>
                                 </NavLink>
                             </Col>
                         </Row>

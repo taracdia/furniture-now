@@ -11,7 +11,7 @@ const items = [
   {
     src: "img/garden-furniture.jpg",
     altText: "New Deals Every Day!",
-    caption: "Haven\'t found what you\'re looking for? Come back and see what we have in stock tomorrow!",
+    caption: "Haven't found what you're looking for? Come back and see what we have in stock tomorrow!",
     header: "New Deals Every Day!",
     key: "2"
   },

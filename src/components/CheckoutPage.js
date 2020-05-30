@@ -37,10 +37,7 @@ function CheckoutPage(props) {
                     <Col xl={5} pb-xl={1} pb={5}>
                         <Cart
                             furnitureItems={props.furnitureItems}
-                            addSingleFurniture={props.addSingleFurniture}
-                            removeSingleFurniture={props.removeSingleFurniture}
-                            setMultipleFurnitures={props.setMultipleFurnitures}
-                            deleteFurnitures={props.deleteFurnitures}
+                            setFurnitureQuantity={props.setFurnitureQuantity}
                         />
                     </Col>
                     <Col xl={7} pt-xl={1} pt={5}>

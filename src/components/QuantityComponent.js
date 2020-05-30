@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import { Button, Label, Input, Col } from "reactstrap";
+import React, { Component } from "react";
+import { Button, Input, Col, Row } from "reactstrap";
 
 export default class Quantity extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class Quantity extends Component {
         }
     }
     delete() {
-        this.props.setMultipleFurnitures(this.props.furniture, +0);
+        this.props.setFurnitureQuantity(this.props.furniture, +0);
     }
 
     increase() {
@@ -24,7 +24,7 @@ export default class Quantity extends Component {
         this.setState({
             quantity: value
         });
-        this.props.setMultipleFurnitures(this.props.furniture, value);
+        this.props.setFurnitureQuantity(this.props.furniture, value);
     }
 
     decrease() {
@@ -33,7 +33,7 @@ export default class Quantity extends Component {
             this.setState({
                 quantity: value
             });
-            this.props.setMultipleFurnitures(this.props.furniture, value);
+            this.props.setFurnitureQuantity(this.props.furniture, value);
         }
     }
 
@@ -43,11 +43,12 @@ export default class Quantity extends Component {
         this.setState({
             quantity: value
         });
-        this.props.setMultipleFurnitures(this.props.furniture, value);
+        this.props.setFurnitureQuantity(this.props.furniture, value);
     }
 
     render() {
         return (
+            <Row>
                 <Col>
                     <Button
                         onClick={this.decrease}
@@ -56,6 +57,8 @@ export default class Quantity extends Component {
                     >
                         -
                     </Button>
+                {/* </Col>
+                <Col> */}
                     <Input
                         name="quantity"
                         onChange={this.handleInputChange}
@@ -63,6 +66,8 @@ export default class Quantity extends Component {
                         type="number"
                         min={1}
                     />
+                {/* </Col>
+                <Col> */}
                     <Button
                         onClick={this.increase}
                         className="orangeButton"
@@ -71,6 +76,7 @@ export default class Quantity extends Component {
                         +
                     </Button>
                 </Col>
+            </Row>
         );
     }
 }

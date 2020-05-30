@@ -1,48 +1,29 @@
-import { FURNITURE_ITEMS } from '../shared/furnitureItems';
 import * as ActionTypes from './ActionTypes';
 
-export const FurnitureItems = (state = FURNITURE_ITEMS, action) => {
-    const stateUpdated = [];
+export const FurnitureItems = (state = {
+    isLoading: true,
+    errMess: null,
+    furnitureItems: []
+    }, action) => {
 
     switch (action.type) {
-        case ActionTypes.ADD_SINGLE_FURNITURE:
-            state.map(furniture => {
+        case ActionTypes.SET_FURNITURE_QUANTITY:
+            const furnitureItemsUpdated = [];
+
+            state.furnitureItems.map(furniture => {
                 if (furniture.id === action.payload.furniture.id) {
-                    stateUpdated.push({ ...furniture, quantity: furniture.quantity + 1 })
+                    furnitureItemsUpdated.push({ ...furniture, quantity: action.payload.quantity })
                 } else {
-                    stateUpdated.push(furniture)
+                    furnitureItemsUpdated.push(furniture)
                 }
             });
-            return stateUpdated;
-        case ActionTypes.REMOVE_SINGLE_FURNITURE:
-            state.map(furniture => {
-                if (furniture.id === action.payload.furniture.id) {
-                    stateUpdated.push({ ...furniture, quantity: furniture.quantity - 1 })
-                } else {
-                    stateUpdated.push(furniture)
-                }
-            });
-            return stateUpdated;
-        case ActionTypes.SET_MULTIPLE_FURNITURES:
-            state.map(furniture => {
-                if (furniture.id === action.payload.furniture.id) {
-                    stateUpdated.push({ ...furniture, quantity: action.payload.quantity})
-                } else {
-                    stateUpdated.push(furniture)
-                }
-            });
-            return stateUpdated;
-        case ActionTypes.DELETE_FURNITURES:
-            state.map(furniture => {
-                if (furniture.id === action.payload.furniture.id) {
-                    console.log("delete")
-                    stateUpdated.push({ ...furniture, quantity: 0 })
-                } else {
-                    stateUpdated.push(furniture)
-                }
-            });
-            // console.log(stateUpdated)
-            return stateUpdated;
+            return {...state, isLoading: false, errMess: null, furnitureItems: furnitureItemsUpdated};
+        case ActionTypes.LOAD_FURNITURES:
+            return {...state, isLoading: false, errMess: null, furnitureItems: action.payload};
+        case ActionTypes.FURNITURES_LOADING:
+            return {...state, isLoading: true, errMess: null, furnitureItems: []};
+        case ActionTypes.FURNITURES_FAILED:
+            return {...state, isLoading: false, errMess: action.payload};
         default:
             return state;
     }
