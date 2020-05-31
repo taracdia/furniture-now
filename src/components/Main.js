@@ -7,6 +7,9 @@ import DealModal from "./DealModal";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setFurnitureQuantity, fetchFurnitures } from "../redux/ActionCreators";
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
+
 
 //todo: redux, sass
 
@@ -35,28 +38,32 @@ class Main extends Component {
             // <div onMouseLeave={this.handleModalOn}>
             <div>
                 <DealModal />
-                <Header 
+                <Header
                     furnitureItems={this.props.furnitureItems}
                 />
-                <Switch>
-                    <Route path="/home" render={() => 
-                        <ShoppingPage
-                            furnitureItems={this.props.furnitureItems.furnitureItems}
-                            setFurnitureQuantity={this.props.setFurnitureQuantity}
-                            isLoading={this.props.furnitureItems.isLoading}
-                            errMess={this.props.furnitureItems.errMess}
-                        />} 
-                    />
-                    <Route path="/checkout" render={() => <CheckoutPage
-                        furnitureItems={this.props.furnitureItems.furnitureItems}
-                        isCouponApplied={this.props.isCouponApplied}
-                        isLoggedIn={this.props.isLoggedIn}
-                        setFurnitureQuantity={this.props.setFurnitureQuantity}
-                        isLoading={this.props.furnitureItems.isLoading}
-                        errMess={this.props.furnitureItems.errMess}
-                    />} />
-                    <Redirect to="/home" />
-                </Switch>
+                <TransitionGroup>
+                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+                        <Switch>
+                            <Route path="/home" render={() =>
+                                <ShoppingPage
+                                    furnitureItems={this.props.furnitureItems.furnitureItems}
+                                    setFurnitureQuantity={this.props.setFurnitureQuantity}
+                                    isLoading={this.props.furnitureItems.isLoading}
+                                    errMess={this.props.furnitureItems.errMess}
+                                />}
+                            />
+                            <Route path="/checkout" render={() => <CheckoutPage
+                                furnitureItems={this.props.furnitureItems.furnitureItems}
+                                isCouponApplied={this.props.isCouponApplied}
+                                isLoggedIn={this.props.isLoggedIn}
+                                setFurnitureQuantity={this.props.setFurnitureQuantity}
+                                isLoading={this.props.furnitureItems.isLoading}
+                                errMess={this.props.furnitureItems.errMess}
+                            />} />
+                            <Redirect to="/home" />
+                        </Switch>
+                    </CSSTransition>
+                </TransitionGroup>
                 <Footer />
             </div>
         );

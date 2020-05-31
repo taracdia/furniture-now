@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { NavLink } from "react-router-dom";
 import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown } from "reactstrap";
+import {baseUrl} from "../shared/baseUrl"
+
 
 // $(".addToCart").click(function () {
 //     $("#cartNum").html(++cartNum);
@@ -39,7 +41,7 @@ class Header extends Component {
                             <NavLink to="/home">
                                 <Row className="align-items-center">
                                     <Col>
-                                        <img src="img/logo.svg" alt="logo" height="100px" />
+                                        <img src={baseUrl + "img/logo.svg"} alt="logo" height="100px" />
                                     </Col>
                                     <Col>
                                         <h1>FurnitureNow!</h1>

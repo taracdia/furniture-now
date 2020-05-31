@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import Cart from "./CartComponent.js";
 import CheckoutForm from "./CheckoutForm";
 import { Col, Row, Container } from "reactstrap";
+import { FadeTransform } from 'react-animation-components';
 
 function CheckoutPage(props) {
     // todo: make it so that when these are true these messages are shown
@@ -31,22 +32,28 @@ function CheckoutPage(props) {
         );
     } else {
         return (
-            <Container className="py-5">
-                {loggedInMessage}
-                <Row>
-                    <Col xl={5} pb-xl={1} pb={5}>
-                        <Cart
-                            furnitureItems={props.furnitureItems}
-                            setFurnitureQuantity={props.setFurnitureQuantity}
-                            isLoading={props.isLoading}
-                            errMess={props.errMess}
-                        />
-                    </Col>
-                    <Col xl={7} pt-xl={1} pt={5}>
-                        <CheckoutForm />
-                    </Col>
-                </Row>
-            </Container>
+            <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(50%)'
+                }}>
+                <Container className="py-5">
+                    {loggedInMessage}
+                    <Row>
+                        <Col xl={5} pb-xl={1} pb={5}>
+                            <Cart
+                                furnitureItems={props.furnitureItems}
+                                setFurnitureQuantity={props.setFurnitureQuantity}
+                                isLoading={props.isLoading}
+                                errMess={props.errMess}
+                            />
+                        </Col>
+                        <Col xl={7} pt-xl={1} pt={5}>
+                            <CheckoutForm />
+                        </Col>
+                    </Row>
+                </Container>
+            </FadeTransform>
         );
     }
 

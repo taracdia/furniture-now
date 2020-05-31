@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
-
+import {baseUrl} from "../shared/baseUrl"
 
 class DealModal extends Component {
     constructor(props) {
@@ -38,7 +38,7 @@ class DealModal extends Component {
                         Special Offer!
                     </ModalHeader>
                     <ModalBody>
-                        <img src="img/celebrate.jpg" className="w-100" />
+                        <img src={baseUrl + "img/celebrate.jpg"} className="w-100" alt="fireworks" />
                         <h5>30% off when you use coupon code <span className="font-weight-bolder attention">DEAL</span>.</h5>
                     </ModalBody>
                 </Modal>

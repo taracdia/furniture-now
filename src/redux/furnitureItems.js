@@ -8,13 +8,11 @@ export const FurnitureItems = (state = {
 
     switch (action.type) {
         case ActionTypes.SET_FURNITURE_QUANTITY:
-            const furnitureItemsUpdated = [];
-
-            state.furnitureItems.map(furniture => {
+            const furnitureItemsUpdated = state.furnitureItems.map(furniture => {
                 if (furniture.id === action.payload.furniture.id) {
-                    furnitureItemsUpdated.push({ ...furniture, quantity: action.payload.quantity })
+                    return { ...furniture, quantity: action.payload.quantity }
                 } else {
-                    furnitureItemsUpdated.push(furniture)
+                   return furniture
                 }
             });
             return {...state, isLoading: false, errMess: null, furnitureItems: furnitureItemsUpdated};

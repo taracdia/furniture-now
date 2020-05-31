@@ -6,7 +6,7 @@ import logger from 'redux-logger';
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
-            furnitureItems: FurnitureItems
+            furnitureItems: FurnitureItems,
         }),
         applyMiddleware(thunk, logger)
     );
