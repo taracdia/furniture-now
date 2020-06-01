@@ -28,6 +28,7 @@ class DealModal extends Component {
     }
 
     render() {
+        //todo
         // setTimeout(this.handleModalOn, 10000);
 
         return (
