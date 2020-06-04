@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FurnitureCarousel from "./FurnitureCarousel.js";
+import FurnitureCarousel from "./FurnitureCarousel";
 import { Container, Row, Button, Col } from "reactstrap";
 import FURNITURE_TYPES from "../shared/furnitureTypes";
 import Quantity from "./QuantityComponent";
@@ -52,8 +52,6 @@ function ShoppingPage(props) {
 }
 
 function FurnitureRow(props) {
-    console.log(props)
-
     const { type, furnitureItems, setFurnitureQuantity } = props;
     return (
         <Row className="p-4 justify-content-around">

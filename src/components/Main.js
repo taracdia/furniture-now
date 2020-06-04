@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { setFurnitureQuantity, fetchFurnitures, applyCoupon, logIn, changeShippingCost, finishCheckout } from "../redux/ActionCreators";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-//todo: redux, sass
+//todo: sass, improve animations
 
 const mapStateToProps = state => {
     return {
