@@ -39,7 +39,6 @@ class CheckoutForm extends Component {
                         <Col xs="12" sm="6">
                             <Control.text
                                 model=".firstName"
-                                id="firstName"
                                 name="firstName"
                                 placeholder="First Name"
                                 disabled={this.props.loggedIn.isLoggedIn}
@@ -61,7 +60,6 @@ class CheckoutForm extends Component {
                         <Col xs="12" sm="6">
                             <Control.text
                                 model=".lastName"
-                                id="lastName"
                                 name="lastName"
                                 placeholder="Last Name"
                                 className="form-control"
@@ -84,7 +82,6 @@ class CheckoutForm extends Component {
                         <Col>
                             <Control.text
                                 model=".checkoutEmail"
-                                id="checkoutEmail"
                                 name="checkoutEmail"
                                 placeholder="Email"
                                 className="form-control"
@@ -109,7 +106,6 @@ class CheckoutForm extends Component {
                         <Col>
                             <Control.text
                                 model=".address1"
-                                id="address1"
                                 name="address1"
                                 placeholder="Address"
                                 className="form-control"
@@ -132,7 +128,6 @@ class CheckoutForm extends Component {
                         <Col>
                             <Control.text
                                 model=".address2"
-                                id="address2"
                                 name="address2"
                                 placeholder="Apartment, studio, or floor (optional)"
                                 className="form-control"
@@ -143,7 +138,6 @@ class CheckoutForm extends Component {
                         <Col xs="12" md="4">
                             <Control.text
                                 model=".city"
-                                id="city"
                                 name="city"
                                 placeholder="City"
                                 className="form-control"
@@ -164,7 +158,6 @@ class CheckoutForm extends Component {
                         <Col xs="12" sm="6" md="4">
                             <Control.text
                                 model=".state"
-                                id="state"
                                 name="state"
                                 placeholder="State"
                                 className="form-control"
@@ -185,7 +178,6 @@ class CheckoutForm extends Component {
                         <Col xs="12" sm="6" md="4">
                             <Control.text
                                 model=".zipcode"
-                                id="zipcode"
                                 name="zipcode"
                                 placeholder="Zipcode"
                                 className="form-control"
@@ -214,7 +206,6 @@ class CheckoutForm extends Component {
                     <Col xs="12" lg="9">
                         <Control.text
                             model=".cardName"
-                            id="cardName"
                             name="cardName"
                             placeholder="Name on Card"
                             className="form-control"
@@ -235,7 +226,6 @@ class CheckoutForm extends Component {
                     <Col xs="6" lg="3" className="order-lg-2 order-2">
                         <Control.text
                             model=".securityCode"
-                            id="securityCode"
                             name="securityCode"
                             placeholder="Security Code"
                             className="form-control"
@@ -261,7 +251,6 @@ class CheckoutForm extends Component {
                     <Col xs="12" className="order-lg-3 order-4">
                         <Control.text
                             model=".cardNumber"
-                            id="cardNumber"
                             name="cardNumber"
                             placeholder="Card Number"
                             className="form-control"
@@ -288,7 +277,6 @@ class CheckoutForm extends Component {
                     <Col xs="6" className="order-lg-4 order-3">
                         <Control.select
                             model=".cardType"
-                            id="cardType"
                             name="cardType"
                             className="form-control"
                         >
@@ -299,7 +287,6 @@ class CheckoutForm extends Component {
                     <Col xs="12" lg="6">
                         <Control.select
                             model=".shipType"
-                            id="shipType"
                             name="shipType"
                             className="form-control"
                             onChange={this.handleShippingChange}

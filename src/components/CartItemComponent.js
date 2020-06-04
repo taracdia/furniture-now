@@ -52,7 +52,7 @@ class CartItem extends Component {
     render() {
         const furniture = this.props.furniture;
         return (
-            <Row className="align-items-center pb-5">
+            <Row key={furniture.id} className="align-items-center pb-5">
                 <Col xs={"auto"}>
                     <Button
                         onClick={this.delete}
