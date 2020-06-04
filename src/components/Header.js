@@ -2,13 +2,7 @@ import React, { Component } from "react";
 
 import { NavLink } from "react-router-dom";
 import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown } from "reactstrap";
-import {baseUrl} from "../shared/baseUrl"
-
-
-// $(".addToCart").click(function () {
-//     $("#cartNum").html(++cartNum);
-// });
-// let isDealModalTriggered = false;
+import { baseUrl } from "../shared/baseUrl"
 
 class Header extends Component {
     constructor(props) {
@@ -38,19 +32,19 @@ class Header extends Component {
                         <Row className="justify-content-between">
                             <Col sm={"auto"} className="col">
                                 {/* todo: make it so when you mouse over the link it has underlined in orange not blue */}
-                            <NavLink to="/home">
-                                <Row className="align-items-center">
-                                    <Col>
-                                        <img src={baseUrl + "img/logo.svg"} alt="logo" height="100px" />
-                                    </Col>
-                                    <Col>
-                                        <h1>FurnitureNow!</h1>
-                                    </Col>
-                                </Row>
+                                <NavLink to="/home">
+                                    <Row className="align-items-center">
+                                        <Col>
+                                            <img src={baseUrl + "img/logo.svg"} alt="logo" height="100px" />
+                                        </Col>
+                                        <Col>
+                                            <h1>FurnitureNow!</h1>
+                                        </Col>
+                                    </Row>
                                 </NavLink>
 
                             </Col>
-                            <Col  xs={"auto"} className="align-self-end">
+                            <Col xs={"auto"} className="align-self-end">
                                 {/* todo: tooltip */}
                                 <NavLink id="cartLink" className="btn btn-link" role="button" data-toggle="tooltip" data-placement="top" title="Checkout" to="/checkout">
                                     <i className="fa fa-shopping-cart"></i><span className="pl-1"
@@ -78,13 +72,16 @@ class Header extends Component {
                                 <NavLink className="nav-link" to="/#beds">Beds</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/checkout">Check out</NavLink>
+                                <NavLink className="nav-link" to="/checkout">Checkout</NavLink>
                             </NavItem>
                         </Nav>
-                        <Login />
+                        <Login
+                            logIn={this.props.logIn}
+                            loggedIn={this.props.loggedIn}
+                        />
                     </Collapse>
                 </Navbar>
-                
+
             </React.Fragment>
         );
     }
@@ -98,30 +95,38 @@ class Login extends Component {
         this.handleLogin = this.handleLogin.bind(this);
 
         this.state = {
-            isOpen: false,
-            isLoggedIn: false
+            isLoginOpen: false,
+            isErrorMessageShown: false
         }
     }
-    handleLogin() {
-        this.setState({
-            isLoggedIn: true
-        })
+    handleLogin(e) {
+        e.preventDefault();
+        if (e.target.password.value !== "") {
+            this.props.logIn(e.target.email.value);
+        } else {
+            this.setState({
+                isErrorMessageShown: true
+            })
+        }
     }
 
     toggleOpen() {
         this.setState({
-            isOpen: !this.state.isOpen
+            isLoginOpen: !this.state.isLoginOpen
         })
     }
 
     render() {
-        if (this.state.isLoggedIn) {
+        const errMess = this.state.isErrorMessageShown ?
+            <p className="errorMessage">Password needed</p>
+            : "";
+        if (this.props.loggedIn.isLoggedIn) {
             return (
-                <p className="mb-0" id="welcomeMessage">Welcome, {this.email.value}</p>
+                <p className="mb-0" id="welcomeMessage">Welcome, {this.props.loggedIn.email}</p>
             );
         } else {
             return (
-                <Dropdown isOpen={this.state.isOpen} toggle={this.toggleOpen}>
+                <Dropdown isOpen={this.state.isLoginOpen} toggle={this.toggleOpen}>
                     <DropdownToggle className="orangeButton" caret>
                         Log in!
                     </DropdownToggle>
@@ -132,12 +137,13 @@ class Login extends Component {
                                 <Input type="email" id="email"
                                     placeholder="email@example.com"
                                     innerRef={input => this.email = input}
-                                    />
+                                />
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="loginPass">Password</Label>
-                                <Input type="password" id="loginPass"
+                                <Label htmlFor="password">Password</Label>
+                                <Input type="password" id="password"
                                     placeholder="Password" />
+                                {errMess}
                             </FormGroup>
                             <FormGroup check>
                                 <Label check>

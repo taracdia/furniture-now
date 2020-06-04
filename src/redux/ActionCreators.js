@@ -124,3 +124,31 @@ export const loadComments = comments => ({
     type: ActionTypes.LOAD_FURNITURES,
     payload: comments
 });
+
+
+
+
+export const applyCoupon = () => ({
+    type: ActionTypes.APPLY_COUPON,
+    payload: true
+})
+
+export const changeShippingCost = cost => ({
+    type: ActionTypes.CHANGE_SHIPPING_COST,
+    payload: cost
+})
+
+export const finishCheckout = () => ({
+    type: ActionTypes.FINISH_CHECKOUT,
+    payload: true
+})
+
+
+
+export const logIn = email => ({
+    type: ActionTypes.LOG_IN,
+    payload: {
+        email: email,
+        isLoggedIn: true
+    }
+})

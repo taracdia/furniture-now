@@ -3,32 +3,37 @@ import Cart from "./CartComponent.js";
 import CheckoutForm from "./CheckoutForm";
 import { Col, Row, Container } from "reactstrap";
 import { FadeTransform } from 'react-animation-components';
+import {Loading} from "./LoadingComponent"
 
 function CheckoutPage(props) {
     // todo: make it so that when these are true these messages are shown
-
-    const loggedInMessage = props.isLoggedIn ? (
-        <Row>
-            <Col>
-                <h3>You are logged in!</h3>
-            </Col>
-        </Row>
-    ) : "";
-    if (props.isThankDisplayed) {
+    if (props.checkoutOptions.checkoutFinished) {
         return (
-            <Row>
-                <Col>
-                    <h3>Thank you for shopping with FurnitureNow!</h3>
-                </Col>
-            </Row>
+            <Container className={"my-4 py-4"}>
+                <Row className={"my-4 py-4 justify-content-center"} >
+                    <Col>
+                        <h3>Thank you for shopping with FurnitureNow!</h3>
+                    </Col>
+                </Row>
+            </Container>
         );
-    } else if (props.isCartEmpty) {
+    } else if (props.furnitureItems.isLoading) {
         return (
-            <Row>
-                <Col>
-                    <h3>Your cart is empty</h3>
-                </Col>
-            </Row>
+            <Container className={"my-4 py-4"}>
+                <Row className={"my-4 py-4 justify-content-center"} >                
+                    <Loading />
+                </Row>
+            </Container>
+        );
+    } else if (props.furnitureItems.errMess) {
+        return (
+            <Container className={"my-4 py-4"}>
+                <Row className={"my-4 py-4 justify-content-center"} >
+                    <Col>
+                        <h3>{props.furnitureItems.errMess}</h3>
+                    </Col>
+                </Row>
+            </Container>
         );
     } else {
         return (
@@ -38,18 +43,20 @@ function CheckoutPage(props) {
                     exitTransform: 'scale(0.5) translateY(50%)'
                 }}>
                 <Container className="py-5">
-                    {loggedInMessage}
                     <Row>
                         <Col xl={5} pb-xl={1} pb={5}>
                             <Cart
-                                furnitureItems={props.furnitureItems}
+                                furnitureItems={props.furnitureItems.furnitureItems}
                                 setFurnitureQuantity={props.setFurnitureQuantity}
-                                isLoading={props.isLoading}
-                                errMess={props.errMess}
+                                applyCoupon={props.applyCoupon}
+                                checkoutOptions={props.checkoutOptions}
                             />
                         </Col>
                         <Col xl={7} pt-xl={1} pt={5}>
-                            <CheckoutForm />
+                            <CheckoutForm
+                                changeShippingCost={props.changeShippingCost}
+                                loggedIn={props.loggedIn}
+                            />
                         </Col>
                     </Row>
                 </Container>

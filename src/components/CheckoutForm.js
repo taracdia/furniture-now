@@ -12,49 +12,29 @@ const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 class CheckoutForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            address1: "",
-            address2: "",
-            city: "",
-            state: "",
-            zipcode: "",
-            cardName: "",
-            securityCode: "",
-            cardNumber: "",
-            cardType: "Visa",
-            shipType: "Free Shipping +$0.00"
-        }
-
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleShippingChange = this.handleShippingChange.bind(this);
+    }
+    
+    handleSubmit(values) {
+        console.log(values)
     }
 
-
     handleShippingChange(event) {
-        //todo: make it work
         let shipCost = 0.0;
         if (event.target.value === "Fast Shipping +$2.00") {
             shipCost = 2.0;
         } else if (event.target.value === "Faster Shipping +$5.00") {
             shipCost = 5.0;
         }
-        this.setState({
-            shippingPrice: shipCost
-        });
-    }
-
-    handleSubmit(event) {
-        console.log("Current state is: " + JSON.stringify(this.state));
-        alert("Current state is: " + JSON.stringify(this.state));
-        event.preventDefault();
+        this.props.changeShippingCost(shipCost);
     }
 
     render() {
         return (
-            <LocalForm onSubmit={this.handleSubmit}>
-                <div className="pb-5">
+            <LocalForm onSubmit={values => this.handleSubmit(values)}>
+                {/* todo: make this work */}
+                {/* <fieldset disabled={this.props.loggedIn.isLoggedIn} className="pb-5"> */}
                     <Row className="form-group">
                         <Col xs="12" sm="6">
                             <Control.text
@@ -62,6 +42,7 @@ class CheckoutForm extends Component {
                                 id="firstName"
                                 name="firstName"
                                 placeholder="First Name"
+                                disabled={this.props.loggedIn.isLoggedIn}
                                 className="form-control"
                                 validators={{
                                     required
@@ -102,9 +83,9 @@ class CheckoutForm extends Component {
                     <Row className="form-group">
                         <Col>
                             <Control.text
-                                model=".email"
-                                id="email"
-                                name="email"
+                                model=".checkoutEmail"
+                                id="checkoutEmail"
+                                name="checkoutEmail"
                                 placeholder="Email"
                                 className="form-control"
                                 validators={{
@@ -114,7 +95,7 @@ class CheckoutForm extends Component {
                             />
                             <Errors
                                 className="text-danger"
-                                model=".email"
+                                model=".checkoutEmail"
                                 show="touched"
                                 component="div"
                                 messages={{
@@ -227,7 +208,8 @@ class CheckoutForm extends Component {
                             />
                         </Col>
                     </Row>
-                </div>
+                {/* </fieldset> */}
+
                 <Row className="form-group">
                     <Col xs="12" lg="9">
                         <Control.text
@@ -320,6 +302,7 @@ class CheckoutForm extends Component {
                             id="shipType"
                             name="shipType"
                             className="form-control"
+                            onChange={this.handleShippingChange}
                         >
                             <option defaultValue>Free Shipping +$0.00</option>
                             <option>Fast Shipping +$2.00</option>
