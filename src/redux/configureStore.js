@@ -1,5 +1,5 @@
 import {createStore, combineReducers, applyMiddleware } from 'redux';
-import {FurnitureItems} from "./furnitureItems";
+import {furnitures} from "./furnitures";
 import {CheckoutOptions} from "./checkoutOptions";
 import {LoggedIn} from "./loggedIn";
 import thunk from 'redux-thunk';
@@ -8,7 +8,7 @@ import logger from 'redux-logger';
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
-            furnitureItems: FurnitureItems,
+            furnitures: furnitures,
             checkoutOptions: CheckoutOptions,
             loggedIn: LoggedIn
         }),

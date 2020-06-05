@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button, Input, Col, Row } from "reactstrap";
 
-export default class Quantity extends Component {
+export default class Quantity extends React.Component {
     constructor(props) {
         super(props);
 

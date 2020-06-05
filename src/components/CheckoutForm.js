@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button, Row, Col } from "reactstrap";
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
@@ -9,7 +9,7 @@ const exactLength = len => val => val && (val.length === len);
 const isNumber = val => !isNaN(+val);
 const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
-class CheckoutForm extends Component {
+class CheckoutForm extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);

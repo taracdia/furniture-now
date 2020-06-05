@@ -17,7 +17,7 @@ function CheckoutPage(props) {
                 </Row>
             </Container>
         );
-    } else if (props.furnitureItems.isLoading) {
+    } else if (props.furnitures.isLoading) {
         return (
             <Container className={"my-4 py-4"}>
                 <Row className={"my-4 py-4 justify-content-center"} >                
@@ -25,12 +25,12 @@ function CheckoutPage(props) {
                 </Row>
             </Container>
         );
-    } else if (props.furnitureItems.errMess) {
+    } else if (props.furnitures.errMess) {
         return (
             <Container className={"my-4 py-4"}>
                 <Row className={"my-4 py-4 justify-content-center"} >
                     <Col>
-                        <h3>{props.furnitureItems.errMess}</h3>
+                        <h3>{props.furnitures.errMess}</h3>
                     </Col>
                 </Row>
             </Container>
@@ -46,7 +46,7 @@ function CheckoutPage(props) {
                     <Row>
                         <Col xl={5} pb-xl={1} pb={5}>
                             <Cart
-                                furnitureItems={props.furnitureItems.furnitureItems}
+                                furnitures={props.furnitures.furnitures}
                                 setFurnitureQuantity={props.setFurnitureQuantity}
                                 applyCoupon={props.applyCoupon}
                                 checkoutOptions={props.checkoutOptions}

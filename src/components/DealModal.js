@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import {baseUrl} from "../shared/baseUrl"
 
-class DealModal extends Component {
+class DealModal extends React.Component {
     constructor(props) {
         super(props);
 

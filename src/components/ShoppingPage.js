@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import FurnitureCarousel from "./FurnitureCarousel";
 import { Container, Row, Button, Col } from "reactstrap";
 import FURNITURE_TYPES from "../shared/furnitureTypes";
@@ -8,7 +8,7 @@ import { baseUrl } from "../shared/baseUrl";
 import { Fade, Stagger } from 'react-animation-components';
 
 function ShoppingPage(props) {
-    if (props.furnitureItems.isLoading) {
+    if (props.furnitures.isLoading) {
         return (
             <Container className={"my-4 py-4"}>
                 <Row className={"my-4 py-4 justify-content-center"} >
@@ -16,12 +16,12 @@ function ShoppingPage(props) {
                 </Row>
             </Container>
         );
-    } else if (props.furnitureItems.errMess) {
+    } else if (props.furnitures.errMess) {
         return (
             <Container>
                 <Row>
                     <Col>
-                        <h4>{props.furnitureItems.errMess}</h4>
+                        <h4>{props.furnitures.errMess}</h4>
                     </Col>
                 </Row>
             </Container>
@@ -36,11 +36,13 @@ function ShoppingPage(props) {
                 </Row>
                 {Object.values(FURNITURE_TYPES).map(furnitureType => {
                     return (
-                        <React.Fragment>
+                        <React.Fragment
+                            key={furnitureType}
+                        >
                             <hr />
                             <FurnitureRow
                                 type={furnitureType}
-                                furnitureItems={props.furnitureItems.furnitureItems.filter(furniture => furniture.type === furnitureType)}
+                                furnitures={props.furnitures.furnitures.filter(furniture => furniture.type === furnitureType)}
                                 setFurnitureQuantity={props.setFurnitureQuantity}
                             />
                         </React.Fragment>
@@ -52,13 +54,13 @@ function ShoppingPage(props) {
 }
 
 function FurnitureRow(props) {
-    const { type, furnitureItems, setFurnitureQuantity } = props;
+    const { type, furnitures, setFurnitureQuantity } = props;
     return (
         <Row className="p-4 justify-content-around">
             <Col className="py-4">
                 <h3>{type}</h3>
                 <Stagger in>
-                    {furnitureItems.map(furniture => {
+                    {furnitures.map(furniture => {
                         return (
                             <Fade in key={furniture.id}>
                                 <FurnitureCard
@@ -76,7 +78,7 @@ function FurnitureRow(props) {
 }
 
 
-class FurnitureCard extends Component {
+class FurnitureCard extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);

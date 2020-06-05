@@ -13,7 +13,7 @@ export const fetchFurnitures = () => dispatch => {
 
     dispatch(furnituresLoading());
 
-    return fetch(baseUrl + "furnitureItems")
+    return fetch(baseUrl + "furnitures")
         .then(response => {
             if (response.ok) {
                 return response;

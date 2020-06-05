@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { Row, Button, Col } from "reactstrap";
 import Quantity from "./QuantityComponent";
 import {baseUrl} from "../shared/baseUrl"
 
 
-class CartItem extends Component {
+class CartItem extends React.Component {
     constructor(props) {
         super(props);
 
@@ -52,7 +52,7 @@ class CartItem extends Component {
     render() {
         const furniture = this.props.furniture;
         return (
-            <Row key={furniture.id} className="align-items-center pb-5">
+            <Row className="align-items-center pb-5">
                 <Col xs={"auto"}>
                     <Button
                         onClick={this.delete}

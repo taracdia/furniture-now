@@ -1,25 +1,25 @@
 import * as ActionTypes from './ActionTypes';
 
-export const FurnitureItems = (state = {
+export const furnitures = (state = {
     isLoading: true,
     errMess: null,
-    furnitureItems: []
+    furnitures: []
     }, action) => {
 
     switch (action.type) {
         case ActionTypes.SET_FURNITURE_QUANTITY:
-            const furnitureItemsUpdated = state.furnitureItems.map(furniture => {
+            const furnituresUpdated = state.furnitures.map(furniture => {
                 if (furniture.id === action.payload.furniture.id) {
                     return { ...furniture, quantity: action.payload.quantity }
                 } else {
                    return furniture
                 }
             });
-            return {...state, isLoading: false, errMess: null, furnitureItems: furnitureItemsUpdated};
+            return {...state, isLoading: false, errMess: null, furnitures: furnituresUpdated};
         case ActionTypes.LOAD_FURNITURES:
-            return {...state, isLoading: false, errMess: null, furnitureItems: action.payload};
+            return {...state, isLoading: false, errMess: null, furnitures: action.payload};
         case ActionTypes.FURNITURES_LOADING:
-            return {...state, isLoading: true, errMess: null, furnitureItems: []};
+            return {...state, isLoading: true, errMess: null, furnitures: []};
         case ActionTypes.FURNITURES_FAILED:
             return {...state, isLoading: false, errMess: action.payload};
         default:

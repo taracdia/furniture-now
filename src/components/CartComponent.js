@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { Container, Row, Button, Form, FormGroup, Input, Col } from "reactstrap";
 import CartItem from "./CartItemComponent";
 
-class Cart extends Component {
+class Cart extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -30,17 +30,18 @@ class Cart extends Component {
     //todo: mistake: when get rid of a furiture the next furniture down has its furniture count changed to that of next furniture down
 
     render() {
-        const { furnitureItems, setFurnitureQuantity, checkoutOptions } = this.props;
-        const furnitures = furnitureItems.filter(furniture => furniture.quantity > 0).map(furniture => {
+        const { furnitures, setFurnitureQuantity, checkoutOptions } = this.props;
+        const cart = furnitures.filter(furniture => furniture.quantity > 0).map(furniture => {
             return (
                 <CartItem
                     furniture={furniture}
                     setFurnitureQuantity={setFurnitureQuantity}
+                    key={furniture.id}
                 />
             );
         });
 
-        const combinedPrice = furnitureItems.reduce((accumulator, furniture) => accumulator + (furniture.quantity * furniture.price), 0) + checkoutOptions.shippingCost;
+        const combinedPrice = furnitures.reduce((accumulator, furniture) => accumulator + (furniture.quantity * furniture.price), 0) + checkoutOptions.shippingCost;
 
         const discountMessage = checkoutOptions.couponApplied ? (
             <Row>
@@ -87,7 +88,7 @@ class Cart extends Component {
                     <Row className="pb-4">
                         <h4>Your cart contains:</h4>
                     </Row>
-                    {furnitures}
+                    {cart}
                     <Row>
                         <Col>
                             <p>Shipping: ${checkoutOptions.shippingCost.toFixed(2)}</p>

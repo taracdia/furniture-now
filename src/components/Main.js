@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ShoppingPage from "./ShoppingPage"
 import CheckoutPage from "./CheckoutPage"
 import Footer from "./Footer";
@@ -13,7 +13,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const mapStateToProps = state => {
     return {
-        furnitureItems: state.furnitureItems,
+        furnitures: state.furnitures,
         checkoutOptions: state.checkoutOptions,
         loggedIn: state.loggedIn,
     };
@@ -28,7 +28,7 @@ const mapDispatchToProps = {
     finishCheckout: () => finishCheckout()
 };
 
-class Main extends Component {
+class Main extends React.Component {
     componentDidMount() {
         this.props.fetchFurnitures();
     }
@@ -40,7 +40,7 @@ class Main extends Component {
             <div>
                 <DealModal />
                 <Header
-                    furnitureItems={this.props.furnitureItems}
+                    furnitures={this.props.furnitures}
                     logIn={this.props.logIn}
                     loggedIn={this.props.loggedIn}
                 />
@@ -49,13 +49,13 @@ class Main extends Component {
                         <Switch>
                             <Route path="/home" render={() =>
                                 <ShoppingPage
-                                    furnitureItems={this.props.furnitureItems}
+                                    furnitures={this.props.furnitures}
                                     setFurnitureQuantity={this.props.setFurnitureQuantity}
                                 />}
                             />
                             <Route path="/checkout" render={() => 
                                 <CheckoutPage
-                                    furnitureItems={this.props.furnitureItems}
+                                    furnitures={this.props.furnitures}
                                     setFurnitureQuantity={this.props.setFurnitureQuantity}
                                     loggedIn={this.props.loggedIn}
                                     checkoutOptions={this.props.checkoutOptions}
