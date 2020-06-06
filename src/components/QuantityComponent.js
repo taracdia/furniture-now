@@ -47,6 +47,9 @@ export default class Quantity extends React.Component {
     }
 
     render() {
+        if (this.props.furniture.quantity === 0){
+            return(<Button className="btn-lg orangeButton" onClick={this.handleSubmit}>+<i className="fa fa-shopping-cart"></i></Button>)
+        } else {
         return (
             <Row>
                 <Col>
@@ -78,5 +81,6 @@ export default class Quantity extends React.Component {
                 </Col>
             </Row>
         );
+            }
     }
 }

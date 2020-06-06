@@ -9,14 +9,21 @@ class Header extends React.Component {
         super(props);
 
         this.toggleNav = this.toggleNav.bind(this);
+        this.closeNav = this.closeNav.bind(this);
         this.state = {
-            isNavOpen: false,
+            isNavOpen: false
         }
     }
 
     toggleNav() {
         this.setState({
             isNavOpen: !this.state.isNavOpen
+        })
+    }
+
+    closeNav(){
+        this.setState({
+            isNavOpen: false
         })
     }
 
@@ -31,7 +38,6 @@ class Header extends React.Component {
                     <Container>
                         <Row className="justify-content-between">
                             <Col sm={"auto"} className="col">
-                                {/* todo: make it so when you mouse over the link it has underlined in orange not blue */}
                                 <NavLink to="/home">
                                     <Row className="align-items-center">
                                         <Col>
@@ -60,19 +66,19 @@ class Header extends React.Component {
                     <Collapse isOpen={this.state.isNavOpen} navbar>
                         <Nav navbar>
                             <NavItem>
-                                <NavLink className="nav-link" to="/home">Home</NavLink>
+                                <NavLink onClick={this.closeNav} className="nav-link" to="/home">Home</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/#tablesChairs">Tables and Chairs</NavLink>
+                                <NavLink onClick={this.closeNav} className="nav-link" to="/furnitureType/Tables%20and%20Chairs">Tables and Chairs</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/#couches">Couches</NavLink>
+                                <NavLink onClick={this.closeNav}  className="nav-link" to="/furnitureType/Couches">Couches</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/#beds">Beds</NavLink>
+                                <NavLink onClick={this.closeNav}  className="nav-link" to="//furnitureType/Beds">Beds</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to="/checkout">Checkout</NavLink>
+                                <NavLink onClick={this.closeNav}  className="nav-link" to="/checkout">Checkout</NavLink>
                             </NavItem>
                         </Nav>
                         <Login
@@ -122,7 +128,7 @@ class Login extends React.Component {
             : "";
         if (this.props.loggedIn.isLoggedIn) {
             return (
-                <p className="mb-0" id="welcomeMessage">Welcome, {this.props.loggedIn.email}</p>
+                <p className="mb-0">Welcome, {this.props.loggedIn.email}</p>
             );
         } else {
             return (

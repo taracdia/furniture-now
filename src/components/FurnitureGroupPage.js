@@ -1,13 +1,11 @@
 import React from "react";
-import { Container, Row, Button, Col } from "reactstrap";
-import FURNITURE_TYPES from "../shared/furnitureTypes";
-import Quantity from "./QuantityComponent";
+import { Container, Row, Col } from "reactstrap";
+import FurnitureCard from "./FurnitureCard";
 import { Loading } from './LoadingComponent';
-import { baseUrl } from "../shared/baseUrl";
-import { Fade, Stagger } from 'react-animation-components';
+// import { Fade, Stagger } from 'react-animation-components';
 
 function FurnitureGroupPage(props) {
-    if (props.furnitures.isLoading) {
+    if (props.isLoading) {
         return (
             <Container className={"my-4 py-4"}>
                 <Row className={"my-4 py-4 justify-content-center"} >
@@ -15,10 +13,10 @@ function FurnitureGroupPage(props) {
                 </Row>
             </Container>
         );
-    } else if (props.furnitures.errMess) {
+    } else if (props.errMess) {
         return (
-            <Container>
-                <Row>
+            <Container className={"my-4 py-4"}>
+                <Row className={"my-4 py-4 justify-content-center"} >
                     <Col>
                         <h4>{props.furnitures.errMess}</h4>
                     </Col>
@@ -26,27 +24,25 @@ function FurnitureGroupPage(props) {
             </Container>
         );
     } else {
+        console.log(props)
         return (
-            <Container>
-                {/* <Row className="justify-content-center pt-5" >
-                    <Col xs={"auto"}>
-                        <FurnitureCarousel />
+                <Container className={"my-4 py-4"}>
+                <Row className={"my-4 py-4"} >
+                    <Col>
+                        <h1>{props.type}</h1>
                     </Col>
                 </Row>
-                {Object.values(FURNITURE_TYPES).map(furnitureType => {
+                <Row>
+                {props.furnitures.map(furniture => {
                     return (
-                        <React.Fragment
-                            key={furnitureType}
-                        >
-                            <hr />
-                            <FurnitureRow
-                                type={furnitureType}
-                                furnitures={props.furnitures.furnitures.filter(furniture => furniture.type === furnitureType)}
+                            <FurnitureCard
+                                furniture={furniture}
                                 setFurnitureQuantity={props.setFurnitureQuantity}
+                                key={furniture.id}
                             />
-                        </React.Fragment>
                     );
-                })} */}
+                })}
+                </Row>
             </Container>
         );
     }

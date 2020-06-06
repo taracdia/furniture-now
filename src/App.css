@@ -14,17 +14,12 @@ body {
 .dropdown-menu {
     background-color: #CACFD2;
     width: max-content;
-    /* right: 0 !important;
-    left: auto !important; */
 }
 #welcomeMessage {
     color: #CACFD2;
 }
 #welcomeMessage p {
     margin-bottom: 0;
-}
-#searchBar {
-    width: 150px;
 }
 .carousel-caption {
     background-color: rgba(0, 0, 0, 0.4);
@@ -45,10 +40,11 @@ body {
     padding: 0px;
     margin: 0px;
 }
-header h1, .navbar-dark .navbar-nav .active>.nav-link, .attention {
+header h1, header a:hover, .navbar-dark .navbar-nav .active>.nav-link, .attention {
     color: orange;
 }
-header .form-contro {
+
+header .form-control {
     background-color: #1B2631 ;
 }
 /* todo: make it so after clicked button the color is good */
@@ -56,6 +52,11 @@ header .form-contro {
     background-color: orange;
     color: #1B2631;
 }
+
+.orangeButton:focus, .orangeButton:hover {
+    background-color: darkorange!important;
+}
+
 .errorMessage {
     color: red;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import ShoppingPage from "./ShoppingPage"
 import CheckoutPage from "./CheckoutPage"
+import FurnitureGroupPage from "./FurnitureGroupPage"
 import Footer from "./Footer";
 import Header from "./Header";
 import DealModal from "./DealModal";
@@ -32,8 +33,22 @@ class Main extends React.Component {
     componentDidMount() {
         this.props.fetchFurnitures();
     }
-
     render() {
+
+        const FurnitureGroupType = ({ match }) => {
+            const param = match.params.type
+            console.log(param)
+            return (
+                <FurnitureGroupPage
+                    furnitures={this.props.furnitures.furnitures.filter(furniture => furniture.type === param)}
+                    isLoading={this.props.furnitures.isLoading}
+                    errMess={this.props.furnitures.errMess}
+                    setFurnitureQuantity={this.props.setFurnitureQuantity}
+                    type={param}
+                />
+            );
+        }
+
         // setTimeout(this.handleModalOn, 10000);
         return (
             // <div onMouseLeave={this.handleModalOn}>
@@ -47,13 +62,13 @@ class Main extends React.Component {
                 <TransitionGroup>
                     <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
                         <Switch>
-                            <Route path="/home" render={() =>
+                            <Route exact path="/home" render={() =>
                                 <ShoppingPage
                                     furnitures={this.props.furnitures}
                                     setFurnitureQuantity={this.props.setFurnitureQuantity}
                                 />}
                             />
-                            <Route path="/checkout" render={() => 
+                            <Route exact path="/checkout" render={() =>
                                 <CheckoutPage
                                     furnitures={this.props.furnitures}
                                     setFurnitureQuantity={this.props.setFurnitureQuantity}
@@ -62,7 +77,10 @@ class Main extends React.Component {
                                     applyCoupon={this.props.applyCoupon}
                                     changeShippingCost={this.props.changeShippingCost}
                                     finishCheckout={this.props.finishCheckout}
-                                />} 
+                                />}
+                            />
+                            <Route path='/furnitureType/:type'
+                                component={FurnitureGroupType}
                             />
                             <Redirect to="/home" />
                         </Switch>
