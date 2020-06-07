@@ -16,8 +16,8 @@ class CheckoutForm extends React.Component {
         this.handleShippingChange = this.handleShippingChange.bind(this);
     }
     
-    handleSubmit(values) {
-        console.log(values)
+    handleSubmit() {
+        this.props.finishCheckout();
     }
 
     handleShippingChange(event) {
@@ -32,7 +32,7 @@ class CheckoutForm extends React.Component {
 
     render() {
         return (
-            <LocalForm onSubmit={values => this.handleSubmit(values)}>
+            <LocalForm onSubmit={this.handleSubmit}>
                 {/* todo: make this work */}
                 {/* <fieldset disabled={this.props.loggedIn.isLoggedIn} className="pb-5"> */}
                     <Row className="form-group">

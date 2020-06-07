@@ -5,17 +5,12 @@ export default class Quantity extends React.Component {
     constructor(props) {
         super(props);
 
-        this.delete = this.delete.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.increase = this.increase.bind(this);
         this.decrease = this.decrease.bind(this);
-
         this.state = {
             quantity: this.props.furniture.quantity
         }
-    }
-    delete() {
-        this.props.setFurnitureQuantity(this.props.furniture, +0);
     }
 
     increase() {
@@ -48,7 +43,7 @@ export default class Quantity extends React.Component {
 
     render() {
         if (this.props.furniture.quantity === 0){
-            return(<Button className="btn-lg orangeButton" onClick={this.handleSubmit}>+<i className="fa fa-shopping-cart"></i></Button>)
+            return(<Button className="btn-lg orangeButton" onClick={this.increase}>+<i className="fa fa-shopping-cart"></i></Button>)
         } else {
         return (
             <Row>

@@ -9,8 +9,9 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setFurnitureQuantity, fetchFurnitures, applyCoupon, logIn, changeShippingCost, finishCheckout } from "../redux/ActionCreators";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import FURNITURE_TYPES from "../shared/furnitureTypes"
 
-//todo: sass, improve animations
+//todo: sass, improve animations n layout
 
 const mapStateToProps = state => {
     return {
@@ -36,17 +37,25 @@ class Main extends React.Component {
     render() {
 
         const FurnitureGroupType = ({ match }) => {
-            const param = match.params.type
-            console.log(param)
-            return (
-                <FurnitureGroupPage
-                    furnitures={this.props.furnitures.furnitures.filter(furniture => furniture.type === param)}
-                    isLoading={this.props.furnitures.isLoading}
-                    errMess={this.props.furnitures.errMess}
-                    setFurnitureQuantity={this.props.setFurnitureQuantity}
-                    type={param}
-                />
-            );
+            const param = match.params.type;
+            if (FURNITURE_TYPES.includes(param)) {
+                return (
+                    <FurnitureGroupPage
+                        furnitures={this.props.furnitures.furnitures.filter(furniture => furniture.type === param)}
+                        isLoading={this.props.furnitures.isLoading}
+                        errMess={this.props.furnitures.errMess}
+                        setFurnitureQuantity={this.props.setFurnitureQuantity}
+                        type={param}
+                    />
+                );
+            } else {
+                return (
+                    <FurnitureGroupPage
+                        errMess={`There is no furniture of type "${param}"`}
+                    />
+                )
+            }
+
         }
 
         // setTimeout(this.handleModalOn, 10000);

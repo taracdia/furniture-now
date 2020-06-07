@@ -1,8 +1,8 @@
 import React from "react";
-
 import { NavLink } from "react-router-dom";
 import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown } from "reactstrap";
 import { baseUrl } from "../shared/baseUrl"
+import FURNITURE_TYPES from "../shared/furnitureTypes"
 
 class Header extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class Header extends React.Component {
         })
     }
 
-    closeNav(){
+    closeNav() {
         this.setState({
             isNavOpen: false
         })
@@ -29,15 +29,26 @@ class Header extends React.Component {
 
 
     render() {
-        // $("[data-toggle="tooltip"]").tooltip();
-        // $("[data-toggle="popover"]").popover();
+        // todo $("[data-toggle="popover"]").popover();
+        const furnitureTypeNavs = FURNITURE_TYPES.map(type => {
+            return (
+                <NavItem>
+                    <NavLink
+                        onClick={() => this.closeNav()}
+                        className="nav-link"
+                        to={"/furnitureType/" + type}>{type}
+                    </NavLink>
+                </NavItem>
+            )
+        }
 
+        )
         return (
             <React.Fragment>
                 <header>
                     <Container>
                         <Row className="justify-content-between">
-                            <Col sm={"auto"} className="col">
+                            <Col xs={"auto"}>
                                 <NavLink to="/home">
                                     <Row className="align-items-center">
                                         <Col>
@@ -68,17 +79,11 @@ class Header extends React.Component {
                             <NavItem>
                                 <NavLink onClick={this.closeNav} className="nav-link" to="/home">Home</NavLink>
                             </NavItem>
+                            {furnitureTypeNavs}
                             <NavItem>
-                                <NavLink onClick={this.closeNav} className="nav-link" to="/furnitureType/Tables%20and%20Chairs">Tables and Chairs</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink onClick={this.closeNav}  className="nav-link" to="/furnitureType/Couches">Couches</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink onClick={this.closeNav}  className="nav-link" to="//furnitureType/Beds">Beds</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink onClick={this.closeNav}  className="nav-link" to="/checkout">Checkout</NavLink>
+                                <NavLink onClick={this.closeNav} className="nav-link" to="/checkout">
+                                    Checkout
+                                </NavLink>
                             </NavItem>
                         </Nav>
                         <Login
@@ -123,7 +128,7 @@ class Login extends React.Component {
     }
 
     render() {
-        const errMess = this.state.isErrorMessageShown ?
+        const errorMessage = this.state.isErrorMessageShown ?
             <p className="errorMessage">Password needed</p>
             : "";
         if (this.props.loggedIn.isLoggedIn) {
@@ -149,7 +154,7 @@ class Login extends React.Component {
                                 <Label htmlFor="password">Password</Label>
                                 <Input type="password" id="password"
                                     placeholder="Password" />
-                                {errMess}
+                                {errorMessage}
                             </FormGroup>
                             <FormGroup check>
                                 <Label check>

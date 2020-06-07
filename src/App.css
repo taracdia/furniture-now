@@ -47,7 +47,7 @@ header h1, header a:hover, .navbar-dark .navbar-nav .active>.nav-link, .attentio
 header .form-control {
     background-color: #1B2631 ;
 }
-/* todo: make it so after clicked button the color is good */
+
 .orangeButton {
     background-color: orange;
     color: #1B2631;
@@ -73,11 +73,17 @@ div.col img {
     height: 100%;
 }
 
+.entirePage {
+    padding-top: 165px;
+    padding-bottom: 165px;
+    text-align: center;
+}
+
 .furniture-card div.col p {
     text-align: center;
 }
 
-/* border */
+/* todo: remove border */
 
 .border {
     border-color: red;

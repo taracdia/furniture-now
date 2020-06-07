@@ -112,16 +112,16 @@ export const fetchComments = () => dispatch => {
 };
 
 export const commentsLoading = () => ({
-    type: ActionTypes.FURNITURES_LOADING
+    type: ActionTypes.COMMENTS_LOADING
 });
 
 export const commentsFailed = errMess => ({
-    type: ActionTypes.FURNITURES_FAILED,
+    type: ActionTypes.COMMENTS_FAILED,
     payload: errMess
 });
 
 export const loadComments = comments => ({
-    type: ActionTypes.LOAD_FURNITURES,
+    type: ActionTypes.LOAD_COMMENTS,
     payload: comments
 });
 

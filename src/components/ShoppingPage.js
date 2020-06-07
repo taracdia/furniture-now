@@ -1,6 +1,7 @@
 import React from "react";
 import FurnitureCarousel from "./FurnitureCarousel";
-import { Container, Row, Button, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
+import { NavLink } from "react-router-dom";
 import FURNITURE_TYPES from "../shared/furnitureTypes";
 import { Loading } from './LoadingComponent';
 import { Fade, Stagger } from 'react-animation-components';
@@ -10,21 +11,13 @@ import FurnitureCard from "./FurnitureCard";
 function ShoppingPage(props) {
     if (props.furnitures.isLoading) {
         return (
-            <Container className={"my-4 py-4"}>
-                <Row className={"my-4 py-4 justify-content-center"} >
-                    <Loading />
-                </Row>
-            </Container>
+            <div className="entirePage">
+                <Loading />
+            </div>
         );
     } else if (props.furnitures.errMess) {
         return (
-            <Container>
-                <Row>
-                    <Col>
-                        <h4>{props.furnitures.errMess}</h4>
-                    </Col>
-                </Row>
-            </Container>
+            <h3 className="entirePage">{props.furnitures.errMess}</h3>
         );
     } else {
         return (
@@ -34,7 +27,7 @@ function ShoppingPage(props) {
                         <FurnitureCarousel />
                     </Col>
                 </Row>
-                {Object.values(FURNITURE_TYPES).map(furnitureType => {
+                {FURNITURE_TYPES.map(furnitureType => {
                     return (
                         <React.Fragment
                             key={furnitureType}
@@ -58,7 +51,11 @@ function FurnitureRow(props) {
     return (
         <Row className="p-4 justify-content-around">
             <Col className="py-4">
-                <h3>{type}</h3>
+                <NavLink
+                to={"/furnitureType/" + type}
+                >
+                    <h3>{type}</h3>
+                </NavLink>
                 <Stagger in>
                     {furnitures.map(furniture => {
                         return (

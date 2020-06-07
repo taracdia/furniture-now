@@ -27,19 +27,9 @@ class Cart extends React.Component {
         this.setState({ couponInput: e.target.value })
     }
 
-    //todo: mistake: when get rid of a furiture the next furniture down has its furniture count changed to that of next furniture down
-
     render() {
         const { furnitures, setFurnitureQuantity, checkoutOptions } = this.props;
-        const cart = furnitures.filter(furniture => furniture.quantity > 0).map(furniture => {
-            return (
-                <CartItem
-                    furniture={furniture}
-                    setFurnitureQuantity={setFurnitureQuantity}
-                    key={furniture.id}
-                />
-            );
-        });
+        
 
         const combinedPrice = furnitures.reduce((accumulator, furniture) => accumulator + (furniture.quantity * furniture.price), 0) + checkoutOptions.shippingCost;
 
@@ -88,7 +78,15 @@ class Cart extends React.Component {
                     <Row className="pb-4">
                         <h4>Your cart contains:</h4>
                     </Row>
-                    {cart}
+                    {furnitures.filter(furniture => furniture.quantity > 0).map(furniture => {
+            return (
+                <CartItem
+                    furniture={furniture}
+                    setFurnitureQuantity={setFurnitureQuantity}
+                    key={furniture.id}
+                />
+            );
+        })}
                     <Row>
                         <Col>
                             <p>Shipping: ${checkoutOptions.shippingCost.toFixed(2)}</p>
