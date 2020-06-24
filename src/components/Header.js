@@ -32,7 +32,9 @@ class Header extends React.Component {
         // todo $("[data-toggle="popover"]").popover();
         const furnitureTypeNavs = FURNITURE_TYPES.map(type => {
             return (
-                <NavItem>
+                <NavItem
+                key={type}
+                >
                     <NavLink
                         onClick={() => this.closeNav()}
                         className="nav-link"
@@ -46,13 +48,16 @@ class Header extends React.Component {
         return (
             <React.Fragment>
                 <header>
-                    <Container>
+                    <Container
+                    className="p-0"
+                    >
                         <Row className="justify-content-between">
                             <Col xs={"auto"}>
                                 <NavLink to="/home">
                                     <Row className="align-items-center">
-                                        <Col>
-                                            <img src={baseUrl + "img/logo.svg"} alt="logo" height="100px" />
+                                        <Col xs={"auto"}
+                                        className="pr-0">
+                                            <img src={baseUrl + "img/logo.svg"} alt="logo" height="80px" />
                                         </Col>
                                         <Col>
                                             <h1>FurnitureNow!</h1>
@@ -64,14 +69,12 @@ class Header extends React.Component {
                             <Col xs={"auto"} className="align-self-end">
                                 {/* todo: tooltip */}
                                 <NavLink id="cartLink" className="btn btn-link" role="button" data-toggle="tooltip" data-placement="top" title="Checkout" to="/checkout">
-                                    <i className="fa fa-shopping-cart"></i><span className="pl-1"
-                                        id="cartNum">{this.props.furnitures.furnitures.reduce((accumulator, item) => accumulator + item.quantity, 0)}</span>
+                                    <i className="fa fa-shopping-cart"></i><span className="pl-1">{this.props.furnitures.furnitures.reduce((accumulator, item) => accumulator + item.quantity, 0)}</span>
                                 </NavLink>
                             </Col>
                         </Row>
                     </Container>
                 </header>
-                {/* todo: fix link, and have it so when go to a page it goes to the top */}
                 <Navbar dark sticky="top" expand="md">
                     <NavbarToggler onClick={this.toggleNav} />
                     <Collapse isOpen={this.state.isNavOpen} navbar>

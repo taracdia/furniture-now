@@ -6,11 +6,9 @@ import { FadeTransform } from 'react-animation-components';
 import { Loading } from "./LoadingComponent"
 
 function CheckoutPage(props) {
-    if (!props.checkoutOptions.checkoutFinished) {
+    if (props.checkoutOptions.checkoutFinished) {
         return (
-
             <h3 className="entirePage">Thank you for shopping with FurnitureNow!</h3>
-
         );
     } else if (props.furnitures.isLoading) {
         return (

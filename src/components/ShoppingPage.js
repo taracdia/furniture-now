@@ -52,6 +52,7 @@ function FurnitureRow(props) {
         <Row className="p-4 justify-content-around">
             <Col className="py-4">
                 <NavLink
+                className="furnitureLink"
                 to={"/furnitureType/" + type}
                 >
                     <h3>{type}</h3>

@@ -15,12 +15,7 @@ body {
     background-color: #CACFD2;
     width: max-content;
 }
-#welcomeMessage {
-    color: #CACFD2;
-}
-#welcomeMessage p {
-    margin-bottom: 0;
-}
+
 .carousel-caption {
     background-color: rgba(0, 0, 0, 0.4);
 }
@@ -35,7 +30,7 @@ body {
 
 }
 #cartLink {
-    font-size: 50px;
+    font-size: 40px;
     color: orange;
     padding: 0px;
     margin: 0px;
@@ -61,16 +56,16 @@ header .form-control {
     color: red;
 }
 
-.cartImg {
+.height150 {
     max-height: 150px;
     max-width: 100%;
 }
-div.col img {
+.max-width {
     max-width: 100%;
 }
 
-.furniture-card {
-    height: 100%;
+.furnitureLink, .furnitureLink:hover {
+    color: black;
 }
 
 .entirePage {
@@ -79,18 +74,14 @@ div.col img {
     text-align: center;
 }
 
-.furniture-card div.col p {
-    text-align: center;
-}
-
 /* todo: remove border */
 
 .border {
     border-color: red;
     border-style: solid;
-
 }
 
+/* transitions */
 .page-exit {
     opacity: 1;
 }

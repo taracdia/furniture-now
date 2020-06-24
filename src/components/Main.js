@@ -2,6 +2,7 @@ import React from "react";
 import ShoppingPage from "./ShoppingPage"
 import CheckoutPage from "./CheckoutPage"
 import FurnitureGroupPage from "./FurnitureGroupPage"
+import SingleFurniturePage from "./SingleFurniturePage"
 import Footer from "./Footer";
 import Header from "./Header";
 import DealModal from "./DealModal";
@@ -58,6 +59,42 @@ class Main extends React.Component {
 
         }
 
+        const SingleFurniture = ({ match }) => {
+            const { type } = match.params;
+            const name = match.params.furniture;
+
+            const furniture = this.props.furnitures.furnitures.filter(f => f.name === name)[0];
+             if (!furniture) {
+                return (
+                    <SingleFurniturePage
+                        errMess={`There is no furniture called "${name}"`}
+                    />
+                );
+            } else if (!FURNITURE_TYPES.includes(type)) {
+                return (
+                    <SingleFurniturePage
+                        errMess={`There is no furniture of type "${type}"`}
+                    />
+                );
+            } else if (furniture.type !== type) {
+                return (
+                    <SingleFurniturePage
+                        errMess={`There is no furniture called "${name}" in "${type}"`}
+                    />
+                );
+            } else {
+                return (
+                    <SingleFurniturePage
+                        furniture={furniture}
+                        isLoading={this.props.furnitures.isLoading}
+                        errMess={this.props.furnitures.errMess}
+                        setFurnitureQuantity={this.props.setFurnitureQuantity}
+                    />
+                );
+            }
+
+        }
+
         // setTimeout(this.handleModalOn, 10000);
         return (
             // <div onMouseLeave={this.handleModalOn}>
@@ -88,9 +125,13 @@ class Main extends React.Component {
                                     finishCheckout={this.props.finishCheckout}
                                 />}
                             />
+                            <Route path='/furnitureType/:type/:furniture'
+                                component={SingleFurniture}
+                            />
                             <Route path='/furnitureType/:type'
                                 component={FurnitureGroupType}
                             />
+
                             <Redirect to="/home" />
                         </Switch>
                     </CSSTransition>

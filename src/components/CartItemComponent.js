@@ -64,7 +64,7 @@ class CartItem extends React.Component {
                 </Col>
                 <Col-4 xl="7">
                     <img
-                        className="cartImg"
+                        className="height150"
                         src={baseUrl + furniture.image}
                         alt={furniture.name}
                         />

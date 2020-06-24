@@ -1,10 +1,13 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Loading } from './LoadingComponent';
-import baseUrl from "../shared/baseUrl"
+import { baseUrl } from "../shared/baseUrl"
+import Quantity from "./QuantityComponent";
+
 // import { Fade, Stagger } from 'react-animation-components';
 
 function SingleFurniturePage(props) {
+    //todo: handle comments
     if (props.isLoading) {
         return (
             <div className="entirePage">
@@ -18,7 +21,7 @@ function SingleFurniturePage(props) {
     } else {
         const { furniture, setFurnitureQuantity } = props;
         return (
-            <Container className={"my-4 py-4"}>
+            <Container className={"my-4"}>
                 <Row className={"my-4 py-4"} >
                     <Col>
                         <h1>{furniture.name}</h1>
@@ -26,9 +29,13 @@ function SingleFurniturePage(props) {
                 </Row>
                 <Row>
                     <Col>
-                        <img src={baseUrl + furniture.image} alt={furniture.name} />
+                        <img
+                        className="max-width"
+                        src={baseUrl + furniture.image}
+                        alt={furniture.name} 
+                        />
                     </Col>
-                    <Col>
+                    <Col className="col-auto">
                         <Quantity
                             furniture={furniture}
                             setFurnitureQuantity={setFurnitureQuantity}
