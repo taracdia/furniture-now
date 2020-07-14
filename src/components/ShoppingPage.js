@@ -21,6 +21,7 @@ function ShoppingPage(props) {
         );
     } else {
         return (
+            // todo: make carousel look good
             <Container>
                 <Row className="justify-content-center pt-5" >
                     <Col xs={"auto"}>

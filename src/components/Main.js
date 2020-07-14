@@ -3,6 +3,7 @@ import ShoppingPage from "./ShoppingPage"
 import CheckoutPage from "./CheckoutPage"
 import FurnitureGroupPage from "./FurnitureGroupPage"
 import SingleFurniturePage from "./SingleFurniturePage"
+import RegisterUserPage from "./RegisterUserPage"
 import Footer from "./Footer";
 import Header from "./Header";
 import DealModal from "./DealModal";
@@ -13,6 +14,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import FURNITURE_TYPES from "../shared/furnitureTypes"
 
 //todo: sass, improve animations n layout
+// todo: set up registration
 
 const mapStateToProps = state => {
     return {
@@ -113,6 +115,9 @@ class Main extends React.Component {
                                     furnitures={this.props.furnitures}
                                     setFurnitureQuantity={this.props.setFurnitureQuantity}
                                 />}
+                            />
+                            <Route exact path="/register" render={() =>
+                                <RegisterUserPage/>}
                             />
                             <Route exact path="/checkout" render={() =>
                                 <CheckoutPage

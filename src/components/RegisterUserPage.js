@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
 const required = val => val && val.length;
@@ -8,33 +8,33 @@ const minLength = len => val => val && (val.length >= len);
 const exactLength = len => val => val && (val.length === len);
 const isNumber = val => !isNaN(+val);
 const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+const noMatch = val => confirmVal => val.localeCompare(confirmVal) === 0;
 
-class CheckoutForm extends React.Component {
+
+class RegisterUserPage extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleShippingChange = this.handleShippingChange.bind(this);
-    }
-    
-    handleSubmit() {
-        this.props.finishCheckout();
+        this.handlePasswordUpdate = this.handlePasswordUpdate.bind(this);
+        this.state = {
+            password: ""
+        }
     }
 
-    handleShippingChange(event) {
-        let shipCost = 0.0;
-        if (event.target.value === "Fast Shipping +$2.00") {
-            shipCost = 2.0;
-        } else if (event.target.value === "Faster Shipping +$5.00") {
-            shipCost = 5.0;
-        }
-        this.props.changeShippingCost(shipCost);
+    handleSubmit() {
+        //todo: create this function
+        this.props.createUser();
     }
+
+    handlePasswordUpdate(event){
+        this.setState({password: event.target.value});
+    }
+
 
     render() {
         return (
-            <LocalForm onSubmit={this.handleSubmit}>
-                {/* todo: make this work */}
-                {/* <fieldset disabled={this.props.loggedIn.isLoggedIn} className="pb-5"> */}
+            <Container className="entirePage">
+                <LocalForm onSubmit={this.handleSubmit}>
                     <Row className="form-group">
                         <Col xs="12" sm="6">
                             <Control.text
@@ -80,8 +80,8 @@ class CheckoutForm extends React.Component {
                     <Row className="form-group">
                         <Col>
                             <Control.text
-                                model=".checkoutEmail"
-                                name="checkoutEmail"
+                                model=".userEmail"
+                                name="userEmail"
                                 placeholder="Email"
                                 className="form-control"
                                 validators={{
@@ -91,12 +91,63 @@ class CheckoutForm extends React.Component {
                             />
                             <Errors
                                 className="text-danger"
-                                model=".checkoutEmail"
+                                model=".userEmail"
                                 show="touched"
                                 component="div"
                                 messages={{
                                     required: 'Required',
                                     validEmail: "Invalid Email"
+                                }}
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="form-group">
+                        <Col>
+                            <Control.text
+                                model=".password"
+                                name="password"
+                                placeholder="Password"
+                                className="form-control"
+                                value={this.state.password}
+                                onChange={this.handlePasswordUpdate}
+                                validators={{
+                                    required,
+                                    minLength: minLength(6),
+                                    maxLength: maxLength(14)
+                                }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".password"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required',
+                                    minLength: "Must be at least 6 characters",
+                                    maxLength: "Can't be more than 14 characters"
+                                }}
+                            />
+                        </Col>
+                        <Col>
+                            <Control.text
+                                model=".confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Confirm Password"
+                                className="form-control"
+  
+                                validators={{
+                                    required,
+                                    noMatch: noMatch(this.state.password)
+                                }}
+                            />
+                            <Errors
+                                className="text-danger"
+                                model=".confirmPassword"
+                                show="touched"
+                                component="div"
+                                messages={{
+                                    required: 'Required',
+                                    noMatch: "Passwords must match"
                                 }}
                             />
                         </Col>
@@ -199,114 +250,20 @@ class CheckoutForm extends React.Component {
                             />
                         </Col>
                     </Row>
-                {/* </fieldset> */}
+                    <Row className="form-group">
+                        <Col xs={"auto"}>
+                            <Button type="submit" color="primary">Confirm Purchase</Button>
+                        </Col>
+                        <Col>
+                            <Button color="warning" href="index.html" role="button">Cancel</Button>
+                        </Col>
+                    </Row>
+                </LocalForm>
+            </Container>
 
-                <Row className="form-group">
-                    <Col xs="12" lg="9">
-                        <Control.text
-                            model=".cardName"
-                            name="cardName"
-                            placeholder="Name on Card"
-                            className="form-control"
-                            validators={{
-                                required
-                            }}
-                        />
-                        <Errors
-                                className="text-danger"
-                                model=".cardName"
-                                show="touched"
-                                component="div"
-                                messages={{
-                                    required: 'Required'
-                                }}
-                            />
-                    </Col>
-                    <Col xs="6" lg="3" className="order-lg-2 order-2">
-                        <Control.text
-                            model=".securityCode"
-                            name="securityCode"
-                            placeholder="Security Code"
-                            className="form-control"
-                            validators={{
-                                required,
-                                isNumber,
-                                exactLength: exactLength(3)
-                            }}
-                        />
-                        <Errors
-                                className="text-danger"
-                                model=".securityCode"
-                                show="touched"
-                                component="div"
-                                messages={{
-                                    required: 'Required',
-                                    isNumber: "Numbers only",
-                                    exactLength: "Must be exactly 3 numbers"
-                                }}
-                            />
-                    </Col>
-
-                    <Col xs="12" className="order-lg-3 order-4">
-                        <Control.text
-                            model=".cardNumber"
-                            name="cardNumber"
-                            placeholder="Card Number"
-                            className="form-control"
-                            validators={{
-                                required,
-                                isNumber,
-                                minLength: minLength(13),
-                                maxLength: maxLength(19)
-                            }}
-                        />
-                        <Errors
-                                className="text-danger"
-                                model=".cardNumber"
-                                show="touched"
-                                component="div"
-                                messages={{
-                                    required: 'Required',
-                                    isNumber: "Numbers only",
-                                    minLength: "Must be at least 13 numbers",
-                                    maxLength: "Must be 19 numbers or less"
-                                }}
-                            />
-                    </Col>
-                    <Col xs="6" className="order-lg-4 order-3">
-                        <Control.select
-                            model=".cardType"
-                            name="cardType"
-                            className="form-control"
-                        >
-                            <option defaultValue>Visa</option>
-                            <option>American Express</option>
-                        </Control.select>
-                    </Col>
-                    <Col xs="12" lg="6">
-                        <Control.select
-                            model=".shipType"
-                            name="shipType"
-                            className="form-control"
-                            onChange={this.handleShippingChange}
-                        >
-                            <option defaultValue>Free Shipping +$0.00</option>
-                            <option>Fast Shipping +$2.00</option>
-                            <option>Faster Shipping +$5.00</option>
-                        </Control.select>
-                    </Col>
-                </Row>
-                <Row className="form-group">
-                    <Col xs={"auto"}>
-                        <Button type="submit" color="primary">Confirm Purchase</Button>
-                    </Col>
-                    <Col>
-                        <Button color="warning" href="index.html" role="button">Cancel</Button>
-                    </Col>
-                </Row>
-            </LocalForm>
         );
     }
 }
 
-export default CheckoutForm;
+
+export default RegisterUserPage;

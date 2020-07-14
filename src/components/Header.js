@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown } from "reactstrap";
+import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown, UncontrolledTooltip, ButtonGroup } from "reactstrap";
 import { baseUrl } from "../shared/baseUrl"
 import FURNITURE_TYPES from "../shared/furnitureTypes"
+
 
 class Header extends React.Component {
     constructor(props) {
@@ -29,11 +30,10 @@ class Header extends React.Component {
 
 
     render() {
-        // todo $("[data-toggle="popover"]").popover();
         const furnitureTypeNavs = FURNITURE_TYPES.map(type => {
             return (
                 <NavItem
-                key={type}
+                    key={type}
                 >
                     <NavLink
                         onClick={() => this.closeNav()}
@@ -49,14 +49,14 @@ class Header extends React.Component {
             <React.Fragment>
                 <header>
                     <Container
-                    className="p-0"
+                        className="p-0"
                     >
                         <Row className="justify-content-between">
                             <Col xs={"auto"}>
                                 <NavLink to="/home">
                                     <Row className="align-items-center">
                                         <Col xs={"auto"}
-                                        className="pr-0">
+                                            className="pr-0">
                                             <img src={baseUrl + "img/logo.svg"} alt="logo" height="80px" />
                                         </Col>
                                         <Col>
@@ -67,10 +67,12 @@ class Header extends React.Component {
 
                             </Col>
                             <Col xs={"auto"} className="align-self-end">
-                                {/* todo: tooltip */}
                                 <NavLink id="cartLink" className="btn btn-link" role="button" data-toggle="tooltip" data-placement="top" title="Checkout" to="/checkout">
                                     <i className="fa fa-shopping-cart"></i><span className="pl-1">{this.props.furnitures.furnitures.reduce((accumulator, item) => accumulator + item.quantity, 0)}</span>
                                 </NavLink>
+                                <UncontrolledTooltip placement="bottom" target="cartLink">
+                                    Cart
+        </UncontrolledTooltip>
                             </Col>
                         </Row>
                     </Container>
@@ -166,7 +168,16 @@ class Login extends React.Component {
                                     Remember me
                                 </Label>
                             </FormGroup>
-                            <Button type="submit" value="submit" color="primary">Login</Button>
+                            <ButtonGroup>
+                                <Button type="submit" value="submit" color="primary">Login</Button>
+                                <NavLink to="/register">
+                                    <Button>
+                                        New User?
+                                </Button>
+                                </NavLink>
+                            </ButtonGroup>
+
+
                         </Form>
                     </DropdownMenu>
                 </Dropdown>
