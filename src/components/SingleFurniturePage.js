@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Container, Row, Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Loading } from './LoadingComponent';
 import { baseUrl } from "../shared/baseUrl"
 import Quantity from "./QuantityComponent";
@@ -9,58 +9,39 @@ import Quantity from "./QuantityComponent";
 function SingleFurniturePage(props) {
     //todo: handle comments
     //todo: no ability to comment if not logged in
-    //todo: remove dummy variable
-    const comment = {};
-    comment.author = "Bob";
-    comment.date = new Date();
-    comment.text = "good";
-    comment.rating = 4;
 
-    if (props.isLoading) {
+    //todo: set up loading for other ones
+
+    if (props.furnIsLoading) {
         return (
             <div className="entirePage">
                 <Loading />
             </div>
         );
-    } else if (props.errMess) {
+    } else if (props.furnErrMess) {
         return (
             <h3 className="entirePage">{props.errMess}</h3>
         );
     } else {
-        const { furniture, setFurnitureQuantity } = props;
         return (
-            <Container className={"my-4"}>
-                <Row className={"mt-4 pt-4"} >
-                    <Col>
-                        <h1>{furniture.name}</h1>
-                    </Col>
-                </Row>
-                <Row className={"mb-4"} >
-                    <Col>
-                        <h6>Average rating: #</h6>
-                    </Col>
-                    <Col>
-                        <h6># ratings</h6>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <img
-                            className="max-width"
-                            src={baseUrl + furniture.image}
-                            alt={furniture.name}
+            <Container className={"my-4 py-4"}>
+                <Row className={"py-4"}>
+                    <FurnitureDescriptionComponent
+                        furniture={props.furniture}
+                        setFurnitureQuantity={props.setFurnitureQuantity}
+                    />
+                    <Col xs="12" lg="6">
+                        <SubmissionComponent
                         />
-                    </Col>
-                    <Col className="col-auto">
-                        <Quantity
-                            furniture={furniture}
-                            setFurnitureQuantity={setFurnitureQuantity}
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <SubmissionComponent />
+                        {props.comments.map(comment => {
+                            return (
+                                <Comment
+                                    comment={comment}
+                                    key={comment.id}
+                                />
+                            );
+                        })}
+
                     </Col>
                 </Row>
             </Container>
@@ -68,11 +49,56 @@ function SingleFurniturePage(props) {
     }
 }
 
+function FurnitureDescriptionComponent(props) {
+    const { furniture, setFurnitureQuantity } = props;
+    console.log(furniture)
+    return (
+        <Col>
+            <Row >
+                <Col>
+                    <h1>{furniture.name}</h1>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <h6>Average rating: #</h6>
+                </Col>
+                <Col>
+                    <h6># ratings</h6>
+                </Col>
+            </Row>
+            <Row className={"py-4 align-items-center"}>
+                <Col xs="8">
+                    <img
+                        className="max-width"
+                        src={baseUrl + furniture.image}
+                        alt={furniture.name}
+                    />
+                </Col>
+                <Col xs="4">
+                    <Quantity
+                        furniture={furniture}
+                        setFurnitureQuantity={setFurnitureQuantity}
+                    />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                <p>
+                {furniture.description}
+                </p>
+                </Col>
+            </Row>
+        </Col>
+    );
+
+}
+
 class SubmissionComponent extends Component {
     render() {
-        
+
         return (
-            <Form>
+            <Form className={"mb-4 pb-4"}>
                 <FormGroup>
                     <Label for="rating">Rating</Label>
                     <Input type="select" name="select" id="rating">
@@ -93,13 +119,20 @@ class SubmissionComponent extends Component {
     }
 }
 
-class Comment extends Component {
-    render() {
-        
-        return (
-            <Col>
+function Comment(props) {
+    return (
+        <Row>
+            <Col xs="auto">
+                <h4>Author: {props.comment.author}</h4>
             </Col>
-        );
-    }
+            <Col>
+                <h4>Rating: {props.comment.rating}</h4>
+            </Col>
+            <Col xs="12">
+                <p>{props.comment.text}</p>
+            </Col>
+        </Row>
+    );
+
 }
 export default SingleFurniturePage;

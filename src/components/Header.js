@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown, UncontrolledTooltip, ButtonGroup } from "reactstrap";
+import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavItem, Button, ButtonGroup, Form, FormGroup, Input, DropdownToggle, DropdownMenu, Dropdown, UncontrolledTooltip } from "reactstrap";
 import { baseUrl } from "../shared/baseUrl"
 import FURNITURE_TYPES from "../shared/furnitureTypes"
 
-
+//todo: close navbar when logged in or register
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -161,6 +161,7 @@ class Login extends React.Component {
                                     placeholder="Password" />
                                 {errorMessage}
                             </FormGroup>
+                            <FormGroup></FormGroup>
                             <FormGroup check>
                                 <Label check>
                                     <Input type="checkbox" name="remember"
@@ -169,15 +170,13 @@ class Login extends React.Component {
                                 </Label>
                             </FormGroup>
                             <ButtonGroup>
-                                <Button type="submit" value="submit" color="primary">Login</Button>
-                                <NavLink to="/register">
-                                    <Button>
-                                        New User?
+                            <Button type="submit" value="submit" color="primary">Login</Button>
+                            <NavLink to="/register">
+                                <Button>
+                                New User?
                                 </Button>
                                 </NavLink>
-                            </ButtonGroup>
-
-
+                                </ButtonGroup>
                         </Form>
                     </DropdownMenu>
                 </Dropdown>
@@ -187,3 +186,5 @@ class Login extends React.Component {
 }
 
 export default Header;
+
+

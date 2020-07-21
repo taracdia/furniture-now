@@ -9,24 +9,26 @@ import Header from "./Header";
 import DealModal from "./DealModal";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { setFurnitureQuantity, fetchFurnitures, applyCoupon, logIn, changeShippingCost, finishCheckout } from "../redux/ActionCreators";
+import { setFurnitureQuantity, fetchFurnitures, fetchComments, applyCoupon, logIn, changeShippingCost, finishCheckout } from "../redux/ActionCreators";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import FURNITURE_TYPES from "../shared/furnitureTypes"
 
-//todo: sass, improve animations n layout
-// todo: set up registration
+//todo: sass, improve animations n layout, breadcrumbs
+//todo: when logged in greet by name
 
 const mapStateToProps = state => {
     return {
         furnitures: state.furnitures,
         checkoutOptions: state.checkoutOptions,
         loggedIn: state.loggedIn,
+        comments: state.comments
     };
 };
 
 const mapDispatchToProps = {
     setFurnitureQuantity: (furniture, quantity) => (setFurnitureQuantity(furniture, quantity)),
     fetchFurnitures: () => (fetchFurnitures()),
+    fetchComments: () => (fetchComments()),
     logIn: email => logIn(email),
     applyCoupon: () => (applyCoupon()),
     changeShippingCost: cost => changeShippingCost(cost),
@@ -36,9 +38,9 @@ const mapDispatchToProps = {
 class Main extends React.Component {
     componentDidMount() {
         this.props.fetchFurnitures();
+        this.props.fetchComments();
     }
     render() {
-
         const FurnitureGroupType = ({ match }) => {
             const param = match.params.type;
             if (FURNITURE_TYPES.includes(param)) {
@@ -65,31 +67,35 @@ class Main extends React.Component {
             const { type } = match.params;
             const name = match.params.furniture;
 
+
             const furniture = this.props.furnitures.furnitures.filter(f => f.name === name)[0];
+            const comments = this.props.comments.comments.filter(c => c.furnitureId === furniture.id);
+
              if (!furniture) {
                 return (
                     <SingleFurniturePage
-                        errMess={`There is no furniture called "${name}"`}
+                    furnErrMess={`There is no furniture called "${name}"`}
                     />
                 );
             } else if (!FURNITURE_TYPES.includes(type)) {
                 return (
                     <SingleFurniturePage
-                        errMess={`There is no furniture of type "${type}"`}
+                    furnErrMess={`There is no furniture of type "${type}"`}
                     />
                 );
             } else if (furniture.type !== type) {
                 return (
                     <SingleFurniturePage
-                        errMess={`There is no furniture called "${name}" in "${type}"`}
+                    furnErrMess={`There is no furniture called "${name}" in "${type}"`}
                     />
                 );
             } else {
                 return (
                     <SingleFurniturePage
                         furniture={furniture}
-                        isLoading={this.props.furnitures.isLoading}
-                        errMess={this.props.furnitures.errMess}
+                        comments={comments}
+                        furnIsLoading={this.props.furnitures.isLoading}
+                        furnErrMess={this.props.furnitures.errMess}
                         setFurnitureQuantity={this.props.setFurnitureQuantity}
                     />
                 );
