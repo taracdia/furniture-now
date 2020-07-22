@@ -22,13 +22,11 @@ body {
 .carousel-item {
     text-align: center;
     vertical-align: middle;
-    height: 400px;
+    /* height: 400px; */
 }
-.carousel-item img {
+/* .carousel-item img {
     max-height:100%;
-    max-width:100%;
-
-}
+} */
 #cartLink {
     font-size: 40px;
     color: orange;

@@ -16,7 +16,7 @@ const items = [
     key: "2"
   },
   {
-    src: `${baseUrl}img/dressing-table.jpg`,
+    src: `${baseUrl}img/king-bed.jpg`,
     altText: "Blowout Deals!",
     header: "Blowout Deals!",
     key: "3"

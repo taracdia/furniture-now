@@ -24,7 +24,7 @@ function ShoppingPage(props) {
             // todo: make carousel look good
             <Container>
                 <Row className="justify-content-center pt-5" >
-                    <Col xs={"auto"}>
+                    <Col sm="12" md="10" lg="8" xl="7">
                         <FurnitureCarousel />
                     </Col>
                 </Row>
