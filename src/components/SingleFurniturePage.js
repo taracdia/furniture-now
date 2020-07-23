@@ -7,7 +7,6 @@ import Quantity from "./QuantityComponent";
 // import { Fade, Stagger } from 'react-animation-components';
 
 function SingleFurniturePage(props) {
-    //todo: handle comments
     //todo: no ability to comment if not logged in
 
     //todo: set up loading for other ones

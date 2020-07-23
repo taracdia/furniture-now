@@ -4,7 +4,6 @@ import { Container, Row, Col } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import FURNITURE_TYPES from "../shared/furnitureTypes";
 import { Loading } from './LoadingComponent';
-import { Fade, Stagger } from 'react-animation-components';
 import FurnitureCard from "./FurnitureCard";
 
 
@@ -21,7 +20,6 @@ function ShoppingPage(props) {
         );
     } else {
         return (
-            // todo: make carousel look good
             <Container>
                 <Row className="justify-content-center pt-5" >
                     <Col sm="12" md="10" lg="8" xl="7">
@@ -58,18 +56,18 @@ function FurnitureRow(props) {
                 >
                     <h3>{type}</h3>
                 </NavLink>
-                <Stagger in>
+                <Row>
                     {furnitures.map(furniture => {
                         return (
-                            <Fade in key={furniture.id}>
                                 <FurnitureCard
+                                    key={furniture.id}
                                     furniture={furniture}
                                     setFurnitureQuantity={setFurnitureQuantity}
+                                    
                                 />
-                            </Fade>
                         );
                     })}
-                </Stagger>
+                </Row>
             </Col>
         </Row>
     );

@@ -2,14 +2,12 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 import Quantity from "./QuantityComponent";
 import { baseUrl } from "../shared/baseUrl";
-// import { Fade, Stagger } from 'react-animation-components';
 import { NavLink } from "react-router-dom";
-
 
 function FurnitureCard(props) {
     const { furniture, setFurnitureQuantity } = props;
     return (
-        <Col xs={12} xl={5} className="py-2">
+        <Col xs={12} lg={6} className="py-2">
             <Row className="align-items-center">
                 <Col>
                     <img className="max-width" src={baseUrl + furniture.image} alt={furniture.name} />
@@ -32,7 +30,7 @@ function FurnitureCard(props) {
                     />
                 </Col>
             </Row>
-        </Col>
+         </Col>
     );
 
 }
