@@ -29,18 +29,20 @@ class Cart extends React.Component {
 
     render() {
         const { furnitures, setFurnitureQuantity, checkoutOptions } = this.props;
-        
 
+        //price of all the items in the cart and the shipping
         const combinedPrice = furnitures.reduce((accumulator, furniture) => accumulator + (furniture.quantity * furniture.price), 0) + checkoutOptions.shippingCost;
 
+        //message only appears if the coupon is applied
         const discountMessage = checkoutOptions.couponApplied ? (
             <Row>
                 <Col>
-                    <p id="discountAppliedMessage">30% Discount Applied!</p>
+                    <p>30% Discount Applied!</p>
                 </Col>
             </Row>
         ) : "";
 
+        //message only appears if the coupon input is wrong
         const errorMessage = this.state.isErrorMessageDisplayed ?
             (<Row>
                 <Col>
@@ -51,7 +53,6 @@ class Cart extends React.Component {
         const priceMessage = checkoutOptions.couponApplied ? (
             <Row>
                 <Col>
-
                     <p>Your total is: $<del>{combinedPrice.toFixed(2)}</del> ${(combinedPrice * .7).toFixed(2)}</p>
                 </Col>
             </Row>
@@ -62,54 +63,42 @@ class Cart extends React.Component {
                     </Col>
                 </Row>
             );
-        if (furnitures.length === 0) {
-            return (
-                <Container>
-                    <Row>
-                        <Col>
-                            <h3>Your cart is empty.</h3>
-                        </Col>
-                    </Row>
-                </Container>
-            );
-        } else {
-            return (
-                <Container>
-                    <Row className="pb-4">
-                        <h4>Your cart contains:</h4>
-                    </Row>
-                    {furnitures.filter(furniture => furniture.quantity > 0).map(furniture => {
-            return (
-                <CartItem
-                    furniture={furniture}
-                    setFurnitureQuantity={setFurnitureQuantity}
-                    key={furniture.id}
-                />
-            );
-        })}
-                    <Row>
-                        <Col>
-                            <p>Shipping: ${checkoutOptions.shippingCost.toFixed(2)}</p>
-                        </Col>
-                    </Row>
-                    <Form onSubmit={this.handleCouponSubmit}>
-                        <FormGroup row>
-                            <Col xs={"auto"}>
-                                <Input type="text" className="form-control" onChange={this.onCouponInputChange} placeholder="Coupon Code (Optional)" />
-                            </Col>
-                            <Col xs={"auto"}>
-                                <Button type="submit" className="orangeButton">Add Coupon</Button>
-                            </Col>
-                        </FormGroup>
-                    </Form>
-                    {discountMessage}
-                    {errorMessage}
-                    <hr />
-                    {priceMessage}
-                </Container>
 
-            );
-        }
+        return (
+            <Container>
+                <Row className="pb-4">
+                    <h4>Your cart contains:</h4>
+                </Row>
+                {furnitures.filter(furniture => furniture.quantity > 0).map(furniture => {
+                    return (
+                        <CartItem
+                            furniture={furniture}
+                            setFurnitureQuantity={setFurnitureQuantity}
+                            key={furniture.id}
+                        />
+                    );
+                })}
+                <Row>
+                    <Col>
+                        <p>Shipping: ${checkoutOptions.shippingCost.toFixed(2)}</p>
+                    </Col>
+                </Row>
+                <Form onSubmit={this.handleCouponSubmit}>
+                    <FormGroup row>
+                        <Col xs={"auto"}>
+                            <Input type="text" className="form-control" onChange={this.onCouponInputChange} placeholder="Coupon Code (Optional)" />
+                        </Col>
+                        <Col xs={"auto"}>
+                            <Button type="submit" className="orangeButton">Add Coupon</Button>
+                        </Col>
+                    </FormGroup>
+                </Form>
+                {discountMessage}
+                {errorMessage}
+                <hr />
+                {priceMessage}
+            </Container>
+        );
     }
 }
 

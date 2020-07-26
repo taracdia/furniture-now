@@ -7,6 +7,7 @@ import { Loading } from "./LoadingComponent"
 
 function CheckoutPage(props) {
     if (props.checkoutOptions.checkoutFinished) {
+        //displays after 
         return (
             <h3 className="entirePage">Thank you for shopping with FurnitureNow!</h3>
         );
@@ -20,7 +21,11 @@ function CheckoutPage(props) {
         return (
             <h3 className="entirePage">{props.furnitures.errMess}</h3>
         );
-    } else {
+    } else if (props.furnitures.furnitures.filter(furniture => furniture.quantity > 0).length === 0){
+        return (
+            <h3 className="entirePage">Your cart is empty.</h3>
+        );
+    }else {
         return (
             <FadeTransform
                 in

@@ -4,14 +4,8 @@ import { Loading } from './LoadingComponent';
 import { baseUrl } from "../shared/baseUrl"
 import Quantity from "./QuantityComponent";
 
-// import { Fade, Stagger } from 'react-animation-components';
-
 function SingleFurniturePage(props) {
-    //todo: no ability to comment if not logged in
-
-    //todo: set up loading for other ones
-
-    if (props.furnIsLoading) {
+    if (props.furnIsLoading || !props.comments || props.comments.IsLoading) {
         return (
             <div className="entirePage">
                 <Loading />
@@ -19,20 +13,30 @@ function SingleFurniturePage(props) {
         );
     } else if (props.furnErrMess) {
         return (
-            <h3 className="entirePage">{props.errMess}</h3>
+            <h3 className="entirePage">{props.furnErrMess}</h3>
+        );
+    }
+    else if (props.commentsErrMess) {
+        return (
+            <h3 className="entirePage">{props.commentsErrMess}</h3>
         );
     } else {
+        //Filtering out the comments for other furniture
+        const filteredComments = props.comments.comments.filter(c => c.furnitureId === props.furniture.id);
+
         return (
             <Container className={"my-4 py-4"}>
                 <Row className={"py-4"}>
                     <FurnitureDescriptionComponent
                         furniture={props.furniture}
                         setFurnitureQuantity={props.setFurnitureQuantity}
+                        comments={filteredComments}
                     />
                     <Col xs="12" lg="6">
                         <SubmissionComponent
+                            loggedIn={props.loggedIn}
                         />
-                        {props.comments.map(comment => {
+                        {filteredComments.map(comment => {
                             return (
                                 <Comment
                                     comment={comment}
@@ -49,8 +53,11 @@ function SingleFurniturePage(props) {
 }
 
 function FurnitureDescriptionComponent(props) {
-    const { furniture, setFurnitureQuantity } = props;
-    console.log(furniture)
+    console.log(props)
+    const { furniture, setFurnitureQuantity, comments } = props;
+    const numberOfRatings = comments.length;
+    const combinedRating = comments.reduce((a, c) => a + c.rating, 0);
+    const avRating = combinedRating > 0 ? (combinedRating / numberOfRatings).toFixed(1) : "N/A";
     return (
         <Col>
             <Row >
@@ -60,10 +67,10 @@ function FurnitureDescriptionComponent(props) {
             </Row>
             <Row>
                 <Col>
-                    <h6>Average rating: #</h6>
+                    <h6>Average rating: {avRating}</h6>
                 </Col>
                 <Col>
-                    <h6># ratings</h6>
+                    <h6>{numberOfRatings} ratings</h6>
                 </Col>
             </Row>
             <Row className={"py-4 align-items-center"}>
@@ -83,9 +90,9 @@ function FurnitureDescriptionComponent(props) {
             </Row>
             <Row>
                 <Col>
-                <p>
-                {furniture.description}
-                </p>
+                    <p>
+                        {furniture.description}
+                    </p>
                 </Col>
             </Row>
         </Col>
@@ -95,42 +102,50 @@ function FurnitureDescriptionComponent(props) {
 
 class SubmissionComponent extends Component {
     render() {
-
-        return (
-            <Form className={"mb-4 pb-4"}>
-                <FormGroup>
-                    <Label for="rating">Rating</Label>
-                    <Input type="select" name="select" id="rating">
-                        <option>1{String.fromCharCode(9733)}</option>
-                        <option>2{String.fromCharCode(9733)}</option>
-                        <option>3{String.fromCharCode(9733)}</option>
-                        <option>4{String.fromCharCode(9733)}</option>
-                        <option>5{String.fromCharCode(9733)}</option>
-                    </Input>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="commentArea">Comment</Label>
-                    <Input type="textarea" name="text" id="commentArea" />
-                </FormGroup>
-                <Button className="orangeButton">Submit</Button>
-            </Form>
-        );
+        //Users can only submit a comment if they are logged in
+        if (this.props.loggedIn.isLoggedIn) {
+            return (
+                <Form className={"mb-4 pb-4"}>
+                    <FormGroup>
+                        <Label for="rating">Rating</Label>
+                        <Input type="select" name="select" id="rating">
+                            <option>1{String.fromCharCode(9733)}</option>
+                            <option>2{String.fromCharCode(9733)}</option>
+                            <option>3{String.fromCharCode(9733)}</option>
+                            <option>4{String.fromCharCode(9733)}</option>
+                            <option>5{String.fromCharCode(9733)}</option>
+                        </Input>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="commentArea">Comment</Label>
+                        <Input type="textarea" name="text" id="commentArea" />
+                    </FormGroup>
+                    <Button className="orangeButton">Submit</Button>
+                </Form>
+            );
+        } else {
+            return "";
+        }
     }
 }
 
 function Comment(props) {
     return (
-        <Row>
-            <Col xs="auto">
-                <h4>Author: {props.comment.author}</h4>
-            </Col>
-            <Col>
-                <h4>Rating: {props.comment.rating}</h4>
-            </Col>
-            <Col xs="12">
-                <p>{props.comment.text}</p>
-            </Col>
-        </Row>
+        <div className="py-3">
+            <Row>
+                <Col xs="4">
+                    <p class="font-weight-bold">Author: {props.comment.author}</p>
+                </Col>
+                <Col>
+                    <p>Rating: {props.comment.rating}</p>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <p>{props.comment.text}</p>
+                </Col>
+            </Row>
+        </div>
     );
 
 }

@@ -138,7 +138,7 @@ class Login extends React.Component {
             : "";
         if (this.props.loggedIn.isLoggedIn) {
             return (
-                <p className="mb-0">Welcome, {this.props.loggedIn.email}</p>
+                <p className="mb-0" >Welcome, {this.props.loggedIn.email}</p>
             );
         } else {
             return (

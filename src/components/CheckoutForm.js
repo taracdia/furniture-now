@@ -33,8 +33,6 @@ class CheckoutForm extends React.Component {
     render() {
         return (
             <LocalForm onSubmit={this.handleSubmit}>
-                {/* todo: make this work */}
-                {/* <fieldset disabled={this.props.loggedIn.isLoggedIn} className="pb-5"> */}
                     <Row className="form-group">
                         <Col xs="12" sm="6">
                             <Control.text
@@ -199,8 +197,6 @@ class CheckoutForm extends React.Component {
                             />
                         </Col>
                     </Row>
-                {/* </fieldset> */}
-
                 <Row className="form-group">
                     <Col xs="12" lg="9">
                         <Control.text

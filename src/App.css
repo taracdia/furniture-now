@@ -72,12 +72,6 @@ header .form-control {
     text-align: center;
 }
 
-/* todo: remove border */
-
-.border {
-    border-color: red;
-    border-style: solid;
-}
 
 /* transitions */
 .page-exit {

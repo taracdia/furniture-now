@@ -13,8 +13,6 @@ import { setFurnitureQuantity, fetchFurnitures, fetchComments, applyCoupon, logI
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import FURNITURE_TYPES from "../shared/furnitureTypes"
 
-//todo: sass, improve animations n layout, breadcrumbs
-//todo: when logged in greet by name
 
 const mapStateToProps = state => {
     return {
@@ -69,7 +67,6 @@ class Main extends React.Component {
 
 
             const furniture = this.props.furnitures.furnitures.filter(f => f.name === name)[0];
-            const comments = this.props.comments.comments.filter(c => c.furnitureId === furniture.id);
 
              if (!furniture) {
                 return (
@@ -93,10 +90,11 @@ class Main extends React.Component {
                 return (
                     <SingleFurniturePage
                         furniture={furniture}
-                        comments={comments}
+                        comments={this.props.comments}
                         furnIsLoading={this.props.furnitures.isLoading}
                         furnErrMess={this.props.furnitures.errMess}
                         setFurnitureQuantity={this.props.setFurnitureQuantity}
+                        loggedIn={this.props.loggedIn}
                     />
                 );
             }
