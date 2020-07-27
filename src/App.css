@@ -22,11 +22,8 @@ body {
 .carousel-item {
     text-align: center;
     vertical-align: middle;
-    /* height: 400px; */
 }
-/* .carousel-item img {
-    max-height:100%;
-} */
+
 #cartLink {
     font-size: 40px;
     color: orange;
@@ -72,6 +69,9 @@ header .form-control {
     text-align: center;
 }
 
+.welcomeMessage {
+    color: orange;
+}
 
 /* transitions */
 .page-exit {

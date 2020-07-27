@@ -4,7 +4,6 @@ import { Nav, NavbarToggler, Collapse, Container, Row, Label, Col, Navbar, NavIt
 import { baseUrl } from "../shared/baseUrl"
 import FURNITURE_TYPES from "../shared/furnitureTypes"
 
-//todo: close navbar when logged in or register
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -42,9 +41,8 @@ class Header extends React.Component {
                     </NavLink>
                 </NavItem>
             )
-        }
+        });
 
-        )
         return (
             <React.Fragment>
                 <header>
@@ -93,7 +91,8 @@ class Header extends React.Component {
                         </Nav>
                         <Login
                             logIn={this.props.logIn}
-                            loggedIn={this.props.loggedIn}
+                            users={this.props.users}
+                            closeNav={() => this.closeNav()}
                         />
                     </Collapse>
                 </Navbar>
@@ -109,21 +108,29 @@ class Login extends React.Component {
 
         this.toggleOpen = this.toggleOpen.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.closeNavAndLogin = this.closeNavAndLogin.bind(this);
 
         this.state = {
             isLoginOpen: false,
-            isErrorMessageShown: false
+            passErrorMessage: ""
         }
     }
     handleLogin(e) {
-        e.preventDefault();
-        if (e.target.password.value !== "") {
-            this.props.logIn(e.target.email.value);
-        } else {
+        if (e.target.loginPassword.value === "") {
             this.setState({
-                isErrorMessageShown: true
-            })
+                passErrorMessage: "Password needed"
+            });
+        } else {
+            this.props.logIn(e.target.loginEmail.value, e.target.loginPassword.value);
+            this.closeNavAndLogin();
         }
+    }
+
+    closeNavAndLogin(){
+        this.setState({
+            isLoginOpen: false
+        });
+        this.props.closeNav();
     }
 
     toggleOpen() {
@@ -133,12 +140,9 @@ class Login extends React.Component {
     }
 
     render() {
-        const errorMessage = this.state.isErrorMessageShown ?
-            <p className="errorMessage">Password needed</p>
-            : "";
-        if (this.props.loggedIn.isLoggedIn) {
+        if (this.props.users.isLoggedIn && this.props.users.user && this.props.users.user.email) {
             return (
-                <p className="mb-0" >Welcome, {this.props.loggedIn.email}</p>
+                <p className="mb-0 welcomeMessage" >Welcome, {this.props.users.user.email}</p>
             );
         } else {
             return (
@@ -149,17 +153,19 @@ class Login extends React.Component {
                     <DropdownMenu>
                         <Form onSubmit={this.handleLogin}>
                             <FormGroup>
-                                <Label htmlFor="email">Email address</Label>
-                                <Input type="email" id="email"
+                                <Label htmlFor="loginEmail">Email address</Label>
+                                <Input type="email" id="loginEmail"
                                     placeholder="email@example.com"
-                                    innerRef={input => this.email = input}
+                                    innerRef={input => this.loginEmail = input}
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label htmlFor="password">Password</Label>
-                                <Input type="password" id="password"
-                                    placeholder="Password" />
-                                {errorMessage}
+                                <Label htmlFor="loginPassword">Password</Label>
+                                <Input type="password" id="loginPassword"
+                                    placeholder="Password"
+                                    innerRef={input => this.loginPassword = input}
+                                    />
+                                <p className="errorMessage">{this.state.passErrorMessage}</p>
                             </FormGroup>
                             <FormGroup></FormGroup>
                             <FormGroup check>
@@ -170,13 +176,13 @@ class Login extends React.Component {
                                 </Label>
                             </FormGroup>
                             <ButtonGroup>
-                            <Button type="submit" value="submit" color="primary">Login</Button>
-                            <NavLink to="/register">
-                                <Button>
-                                New User?
+                                <Button type="submit" value="submit" color="primary">Login</Button>
+                                <NavLink to="/register">
+                                    <Button onClick={() => this.closeNavAndLogin()}>
+                                        New User?
                                 </Button>
                                 </NavLink>
-                                </ButtonGroup>
+                            </ButtonGroup>
                         </Form>
                     </DropdownMenu>
                 </Dropdown>

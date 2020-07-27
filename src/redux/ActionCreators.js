@@ -57,7 +57,6 @@ export const postComment = (furnitureId, rating, author, text) => dispatch => {
         author: author,
         text: text
     };
-    newComment.date = new Date().toISOString();
 
     return fetch(baseUrl + 'comments', {
             method: "POST",
@@ -144,11 +143,21 @@ export const finishCheckout = () => ({
 })
 
 
-
-export const logIn = email => ({
+export const logIn = (email, password) => ({
     type: ActionTypes.LOG_IN,
     payload: {
-        email: email,
+        user: {
+            "email": email,
+            "password": password
+        },
         isLoggedIn: true
     }
 })
+
+export const createUser = user => ({
+    type: ActionTypes.CREATE_USER,
+    payload: {
+        user: user,
+        isLoggedIn: true
+    }
+});

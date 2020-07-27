@@ -9,7 +9,7 @@ import Header from "./Header";
 import DealModal from "./DealModal";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { setFurnitureQuantity, fetchFurnitures, fetchComments, applyCoupon, logIn, changeShippingCost, finishCheckout } from "../redux/ActionCreators";
+import { setFurnitureQuantity, fetchFurnitures, fetchComments, applyCoupon, logIn, changeShippingCost, finishCheckout, createUser } from "../redux/ActionCreators";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import FURNITURE_TYPES from "../shared/furnitureTypes"
 
@@ -18,7 +18,7 @@ const mapStateToProps = state => {
     return {
         furnitures: state.furnitures,
         checkoutOptions: state.checkoutOptions,
-        loggedIn: state.loggedIn,
+        users: state.users,
         comments: state.comments
     };
 };
@@ -27,10 +27,11 @@ const mapDispatchToProps = {
     setFurnitureQuantity: (furniture, quantity) => (setFurnitureQuantity(furniture, quantity)),
     fetchFurnitures: () => (fetchFurnitures()),
     fetchComments: () => (fetchComments()),
-    logIn: email => logIn(email),
+    logIn: (email, password) => logIn(email, password),
     applyCoupon: () => (applyCoupon()),
     changeShippingCost: cost => changeShippingCost(cost),
-    finishCheckout: () => finishCheckout()
+    finishCheckout: () => finishCheckout(),
+    createUser: user => createUser(user)
 };
 
 class Main extends React.Component {
@@ -94,7 +95,7 @@ class Main extends React.Component {
                         furnIsLoading={this.props.furnitures.isLoading}
                         furnErrMess={this.props.furnitures.errMess}
                         setFurnitureQuantity={this.props.setFurnitureQuantity}
-                        loggedIn={this.props.loggedIn}
+                        users={this.props.users}
                     />
                 );
             }
@@ -102,6 +103,7 @@ class Main extends React.Component {
         }
 
         // setTimeout(this.handleModalOn, 10000);
+
         return (
             // <div onMouseLeave={this.handleModalOn}>
             <div>
@@ -109,7 +111,7 @@ class Main extends React.Component {
                 <Header
                     furnitures={this.props.furnitures}
                     logIn={this.props.logIn}
-                    loggedIn={this.props.loggedIn}
+                    users={this.props.users}
                 />
                 <TransitionGroup>
                     <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
@@ -121,13 +123,14 @@ class Main extends React.Component {
                                 />}
                             />
                             <Route exact path="/register" render={() =>
-                                <RegisterUserPage/>}
+                                <RegisterUserPage
+                                    createUser={this.props.createUser}
+                                />}
                             />
                             <Route exact path="/checkout" render={() =>
                                 <CheckoutPage
                                     furnitures={this.props.furnitures}
                                     setFurnitureQuantity={this.props.setFurnitureQuantity}
-                                    loggedIn={this.props.loggedIn}
                                     checkoutOptions={this.props.checkoutOptions}
                                     applyCoupon={this.props.applyCoupon}
                                     changeShippingCost={this.props.changeShippingCost}

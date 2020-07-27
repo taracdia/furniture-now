@@ -34,7 +34,7 @@ function SingleFurniturePage(props) {
                     />
                     <Col xs="12" lg="6">
                         <SubmissionComponent
-                            loggedIn={props.loggedIn}
+                            users={props.users}
                         />
                         {filteredComments.map(comment => {
                             return (
@@ -103,7 +103,7 @@ function FurnitureDescriptionComponent(props) {
 class SubmissionComponent extends Component {
     render() {
         //Users can only submit a comment if they are logged in
-        if (this.props.loggedIn.isLoggedIn) {
+        if (this.props.users.isLoggedIn) {
             return (
                 <Form className={"mb-4 pb-4"}>
                     <FormGroup>

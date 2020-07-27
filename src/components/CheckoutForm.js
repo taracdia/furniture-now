@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Row, Col } from "reactstrap";
+import { Button, Row, Col, NavLink } from "reactstrap";
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
 const required = val => val && val.length;
@@ -297,7 +297,9 @@ class CheckoutForm extends React.Component {
                         <Button type="submit" color="primary">Confirm Purchase</Button>
                     </Col>
                     <Col>
-                        <Button color="warning" href="index.html" role="button">Cancel</Button>
+                    <NavLink to="/home">
+                            <Button color="warning">Cancel</Button>
+                            </NavLink>
                     </Col>
                 </Row>
             </LocalForm>

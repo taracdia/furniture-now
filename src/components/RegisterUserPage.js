@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, NavLink } from "reactstrap";
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
 const required = val => val && val.length;
@@ -21,13 +21,14 @@ class RegisterUserPage extends React.Component {
         }
     }
 
-    handleSubmit() {
-        //todo: create this function
-        this.props.createUser();
+    handleSubmit(input) {
+        //this creates a new object with all of the data from the input except for the confirmPassword field
+        const { confirmPassword, ...user } = input;
+        this.props.createUser(user);
     }
 
-    handlePasswordUpdate(event){
-        this.setState({password: event.target.value});
+    handlePasswordUpdate(event) {
+        this.setState({ password: event.target.value });
     }
 
 
@@ -80,8 +81,8 @@ class RegisterUserPage extends React.Component {
                     <Row className="form-group">
                         <Col>
                             <Control.text
-                                model=".userEmail"
-                                name="userEmail"
+                                model=".email"
+                                name="email"
                                 placeholder="Email"
                                 className="form-control"
                                 validators={{
@@ -91,7 +92,7 @@ class RegisterUserPage extends React.Component {
                             />
                             <Errors
                                 className="text-danger"
-                                model=".userEmail"
+                                model=".email"
                                 show="touched"
                                 component="div"
                                 messages={{
@@ -103,7 +104,7 @@ class RegisterUserPage extends React.Component {
                     </Row>
                     <Row className="form-group">
                         <Col>
-                            <Control.text
+                            <Control.password
                                 model=".password"
                                 name="password"
                                 placeholder="Password"
@@ -129,12 +130,12 @@ class RegisterUserPage extends React.Component {
                             />
                         </Col>
                         <Col>
-                            <Control.text
+                            <Control.password
                                 model=".confirmPassword"
                                 name="confirmPassword"
                                 placeholder="Confirm Password"
                                 className="form-control"
-  
+
                                 validators={{
                                     required,
                                     noMatch: noMatch(this.state.password)
@@ -252,10 +253,14 @@ class RegisterUserPage extends React.Component {
                     </Row>
                     <Row className="form-group">
                         <Col xs={"auto"}>
-                            <Button type="submit" color="primary">Confirm Purchase</Button>
+                            <NavLink to="/home">
+                                <Button type="submit" color="primary">Confirm Purchase</Button>
+                            </NavLink>
                         </Col>
                         <Col>
-                            <Button color="warning" href="index.html" role="button">Cancel</Button>
+                            <NavLink to="/home">
+                                <Button color="warning">Cancel</Button>
+                            </NavLink>
                         </Col>
                     </Row>
                 </LocalForm>

@@ -13,3 +13,4 @@ export const CHANGE_SHIPPING_COST = "CHANGE_SHIPPING_COST"
 export const FINISH_CHECKOUT = "FINISH_CHECKOUT"
 
 export const LOG_IN = "LOG_IN"
+export const CREATE_USER = "CREATE_USER"

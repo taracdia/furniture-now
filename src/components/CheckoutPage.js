@@ -45,7 +45,6 @@ function CheckoutPage(props) {
                         <Col xl={7} pt-xl={1} pt={5}>
                             <CheckoutForm
                                 changeShippingCost={props.changeShippingCost}
-                                loggedIn={props.loggedIn}
                                 finishCheckout={props.finishCheckout}
                             />
                         </Col>
