@@ -9,7 +9,7 @@ import Header from "./Header";
 import DealModal from "./DealModal";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { setFurnitureQuantity, fetchFurnitures, fetchComments, applyCoupon, logIn, changeShippingCost, finishCheckout, createUser } from "../redux/ActionCreators";
+import { setFurnitureQuantity, fetchFurnitures, fetchComments, applyCoupon, logIn, changeShippingCost, finishCheckout, createUser, openDealModal, closeDealModal } from "../redux/ActionCreators";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import FURNITURE_TYPES from "../shared/furnitureTypes"
 
@@ -18,6 +18,7 @@ const mapStateToProps = state => {
     return {
         furnitures: state.furnitures,
         checkoutOptions: state.checkoutOptions,
+        dealModalOptions: state.dealModalOptions,
         users: state.users,
         comments: state.comments
     };
@@ -31,13 +32,16 @@ const mapDispatchToProps = {
     applyCoupon: () => (applyCoupon()),
     changeShippingCost: cost => changeShippingCost(cost),
     finishCheckout: () => finishCheckout(),
-    createUser: user => createUser(user)
+    createUser: user => createUser(user),
+    openDealModal: () => openDealModal(),
+    closeDealModal: () => closeDealModal()
 };
 
 class Main extends React.Component {
     componentDidMount() {
         this.props.fetchFurnitures();
         this.props.fetchComments();
+        setTimeout(this.props.openDealModal, 10000);
     }
     render() {
         const FurnitureGroupType = ({ match }) => {
@@ -102,12 +106,13 @@ class Main extends React.Component {
 
         }
 
-        // setTimeout(this.handleModalOn, 10000);
-
         return (
-            // <div onMouseLeave={this.handleModalOn}>
-            <div>
-                <DealModal />
+            <div onMouseLeave={this.props.openDealModal}>
+                <DealModal
+                    closeDealModal={this.props.closeDealModal}
+                    openDealModal={this.props.openDealModal}
+                    isDealModalOpen={this.props.dealModalOptions.isDealModalOpen}
+                />
                 <Header
                     furnitures={this.props.furnitures}
                     logIn={this.props.logIn}

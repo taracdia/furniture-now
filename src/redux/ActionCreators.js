@@ -161,3 +161,11 @@ export const createUser = user => ({
         isLoggedIn: true
     }
 });
+
+
+export const openDealModal = () => ({
+    type: ActionTypes.OPEN_DEAL_MODAL
+});
+export const closeDealModal = () => ({
+    type: ActionTypes.CLOSE_DEAL_MODAL
+});

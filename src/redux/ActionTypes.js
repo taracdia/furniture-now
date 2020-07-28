@@ -14,3 +14,6 @@ export const FINISH_CHECKOUT = "FINISH_CHECKOUT"
 
 export const LOG_IN = "LOG_IN"
 export const CREATE_USER = "CREATE_USER"
+
+export const OPEN_DEAL_MODAL = "OPEN_DEAL_MODAL"
+export const CLOSE_DEAL_MODAL = "CLOSE_DEAL_MODAL"

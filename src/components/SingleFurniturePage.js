@@ -53,7 +53,6 @@ function SingleFurniturePage(props) {
 }
 
 function FurnitureDescriptionComponent(props) {
-    console.log(props)
     const { furniture, setFurnitureQuantity, comments } = props;
     const numberOfRatings = comments.length;
     const combinedRating = comments.reduce((a, c) => a + c.rating, 0);
